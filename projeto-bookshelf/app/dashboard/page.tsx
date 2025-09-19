@@ -5,25 +5,39 @@ import ReportCard from "./reportCard";
 export default function Home() {
   return (
     <>
-    <div className="flex md:flex-row items-start md:items-center justify-between gap-3 p-4 md:p-8 lg:p-12">
-      <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-0">Dashboard</h1>
-      <div className="flex md:flex-row gap-2 md:gap-4">
-        <Link href="/library">
-          <Button size="sm">Biblioteca</Button>
-        </Link>
-        <Link href="/new-book">
-          <Button size="sm">Adicionar Livro</Button>
-        </Link>
-      </div>
+   <div className="flex items-center justify-between px-4 py-1 md:px-8">
+  <div className="flex items-center gap-3">
+    <img src="/logo.png" alt="logo" className="w-30 h-30" />
+    <h1 className="mb-20 md:mb-1 text-2xl md:text-3xl font-bold">Dashboard</h1>
+  </div>
+
+  <div className="flex gap-2 md:gap-10">
+    <Link href="/library"><Button size="sm">Biblioteca</Button></Link>
+    <Link href="/new-book"><Button size="sm">Adicionar Livro</Button></Link>
+  </div>
+</div>
+    
+  <div className="flex flex-col md:flex-row-reverse items-stretch p-2 gap-4">
+  
+  <img
+    src=""
+    alt=""
+    className="w-100 h-80 sm:w-48 sm:h-40 md:w-160 md:h-140 object-cover rounded-md"
+  />
+
+  
+  <div className="flex flex-col justify-between">
+   
+    <h1 className="text-2xl sm:text-3xl md:text-[40px] font-bold text-center md:text-left mb-4 md:mb-0">Organize a sua Biblioteca</h1>
+
+    <div className="grid grid-cols-2 md:grid-cols-4 md:gap-10 gap-4">
+      <ReportCard title={"Total de livros"} value={120} />
+      <ReportCard title={"Livros em andamento"} value={2} />
+      <ReportCard title={"Livros finalizados"} value={10} />
+      <ReportCard title={"Total de páginas lidas"} value={1000} />
     </div>
-
-    <div className="grid gap-4 p-6">
-        <ReportCard title={"Total de livros"} value={120} />
-        <ReportCard title={"Livros em andamento"} value={2} />
-        <ReportCard title={"Livros finalizados"} value={10} />
-        <ReportCard title={"Total de páginas lidas"} value={1000} />
-      </div>
-
+  </div>
+</div>
     </>
   );
 }
