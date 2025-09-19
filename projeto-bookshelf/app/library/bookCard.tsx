@@ -5,18 +5,25 @@ import { StarRating } from "@/components/ui/custom-components/star";
 
 
 
-interface BookCardProps {
+export interface BookCardProps {
+  id: string;
   title: string;
   author: string;
-  imageSrc: string;
-  gender: string;
+  genre: string;
+  year: number;
+  pages: number;
+  rating: number;
+  synopsis: string;
+  cover: string;
+  status: string;
+  totalPaginasLidas: number;
 }
 
-export default function BookCard({ title, author, imageSrc, gender }: BookCardProps) {
+export default function BookCard({  title, author, genre, cover, rating }: BookCardProps) {
   return (
     <Card className="w-64">
       <img 
-        src={imageSrc} 
+        src={cover} 
         alt={`Capa do livro ${title}`} 
         className="w-full h-40 object-cover rounded-t-md"
       />
@@ -25,8 +32,8 @@ export default function BookCard({ title, author, imageSrc, gender }: BookCardPr
       </CardHeader>
       <CardContent>
         <p>{author}</p>
-        <StarRating rating={4} />
-        <Badge variant="outline">{gender}</Badge>   
+        <StarRating rating={rating} />
+        <Badge variant="outline">{genre}</Badge>   
       </CardContent>
       <CardFooter className="flex justify-end gap-2">
         <Button size="sm">Ver</Button>

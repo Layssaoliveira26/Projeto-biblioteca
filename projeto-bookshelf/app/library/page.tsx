@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import BookCard from "./bookCard";
 import { Input } from "@/components/ui/input"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
+import { livros } from "@/lib/livros";
 
 
 export default function LibraryPage() {
+  
   return (
     <div className="p-4 ">
       <h1 className="text-2xl font-bold mb-4">Biblioteca</h1>
@@ -29,42 +31,24 @@ export default function LibraryPage() {
     </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <BookCard 
-          title="A Fúria do Reis" 
-          author="George R.R. Martin" 
-          imageSrc="/capa-got.jpg"
-          gender = "Aventura" 
-        />
-        <BookCard 
-          title="Livro 2" 
-          author="Autor 2" 
-          imageSrc="/livro2.jpg" 
-          gender = "Ação"
-        />
-        <BookCard 
-          title="Livro 2" 
-          author="Autor 2" 
-          imageSrc="/livro2.jpg" 
-          gender = "Ação"
-        />
-        <BookCard 
-          title="Livro 2" 
-          author="Autor 2" 
-          imageSrc="/livro2.jpg" 
-          gender = "Ação"
-        />
-        <BookCard 
-          title="Livro 2" 
-          author="Autor 2" 
-          imageSrc="/livro2.jpg" 
-          gender = "Ação"
-        />
-        <BookCard 
-          title="Livro 2" 
-          author="Autor 2" 
-          imageSrc="/livro2.jpg" 
-          gender = "Ação"
-        />
+        {livros.map((livro, index) => (
+          <BookCard 
+            key={index}
+            id={index.toString()}
+            title={livro.title}
+            author={livro.author}
+            genre={livro.genre}
+            year={livro.year}
+            pages={livro.pages}
+            rating={livro.rating}
+            synopsis={livro.synopsis}
+            cover={livro.cover}
+            status={livro.status}
+            totalPaginasLidas={livro.totalPaginasLidas}
+          />
+        ))}
+        
+        
       </div>
     </div>
   );

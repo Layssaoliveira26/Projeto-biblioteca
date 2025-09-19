@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button"
 import ReportCard from "./reportCard";
+import { livros } from "@/lib/livros";
+
 
 export default function Home() {
+  let paginasLidas: number = 0;
+
   return (
     <>
     <div className="flex md:flex-row items-start md:items-center justify-between gap-3 p-4 md:p-8 lg:p-12">
@@ -18,10 +22,10 @@ export default function Home() {
     </div>
 
     <div className="grid gap-4 p-6">
-        <ReportCard title={"Total de livros"} value={120} />
-        <ReportCard title={"Livros em andamento"} value={2} />
-        <ReportCard title={"Livros finalizados"} value={10} />
-        <ReportCard title={"Total de páginas lidas"} value={1000} />
+        <ReportCard title={"Total de livros"} value={livros.length} />
+        <ReportCard title={"Livros em andamento"} value={(livros.filter((livro) => livro.genre === "Aventura").length)} />
+        <ReportCard title={"Livros finalizados"} value={(livros.filter((livro) => livro.status === "LIDO")).length} />
+        <ReportCard title={"Total de páginas lidas"} value={livros.reduce((total, livro) => total + livro.totalPaginasLidas, 0)} />
       </div>
 
     </>
