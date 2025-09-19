@@ -1,13 +1,22 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import BookCard from "./bookCard";
 import { Input } from "@/components/ui/input"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
-import { livros } from "@/lib/livros";
+import { livros as livrosData  } from "@/lib/livros";
+import { useState } from "react";
 
 
 export default function LibraryPage() {
   
+   const [livros, setLivros] = useState<Livro[]>(livrosData);
+
+     function handleDelete(id: string) {
+    setLivros(livros.filter((livro) => livro.id !== id));
+  }
+
   return (
     <div className="p-4 ">
       <h1 className="text-2xl font-bold mb-4">Biblioteca</h1>
@@ -45,6 +54,7 @@ export default function LibraryPage() {
             cover={livro.cover}
             status={livro.status}
             totalPaginasLidas={livro.totalPaginasLidas}
+            onDelete={() => handleDelete(livro.id)}
           />
         ))}
         

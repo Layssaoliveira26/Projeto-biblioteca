@@ -2,7 +2,7 @@ import { BookCardProps } from "@/app/library/bookCard";
 
 export const livros: BookCardProps[] = [
     {
-        id: "",
+        id: "1",
         title:"A Fúria do Reis",
         author:"George R.R. Martin",
         genre: "Teste1",
@@ -15,7 +15,7 @@ export const livros: BookCardProps[] = [
         totalPaginasLidas: 50
     },
     {
-        id: "",
+        id: "2",
         title:"A Fúria do Reis",
         author:"George R.R. Martin",
         genre: "Aventura",
@@ -28,7 +28,7 @@ export const livros: BookCardProps[] = [
         totalPaginasLidas: 500
     },
     {
-        id: "",
+        id: "3",
         title:"A Fúria do Reis",
         author:"George R.R. Martin",
         genre: "Aventura",
@@ -41,7 +41,7 @@ export const livros: BookCardProps[] = [
         totalPaginasLidas: 500
     },
     {
-        id: "",
+        id: "4",
         title:"A Fúria do Reis",
         author:"George R.R. Martin",
         genre: "Teste",
@@ -54,7 +54,7 @@ export const livros: BookCardProps[] = [
         totalPaginasLidas: 500
     }, 
     {
-        id: "",
+        id: "5",
         title:"A Fúria do Reis",
         author:"George R.R. Martin",
         genre: "Teste",
@@ -67,7 +67,7 @@ export const livros: BookCardProps[] = [
         totalPaginasLidas: 500
     },
     {
-        id: "",
+        id: "6",
         title:"A Fúria do Reis",
         author:"George R.R. Martin",
         genre: "Aventura",

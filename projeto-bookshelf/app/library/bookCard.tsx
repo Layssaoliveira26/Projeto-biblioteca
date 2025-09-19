@@ -1,3 +1,5 @@
+"Use client";
+
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
@@ -17,9 +19,10 @@ export interface BookCardProps {
   cover: string;
   status: string;
   totalPaginasLidas: number;
+  onDelete: (id: string) => void;
 }
 
-export default function BookCard({  title, author, genre, cover, rating }: BookCardProps) {
+export default function BookCard({ id, title, author, genre, cover, rating, onDelete }: BookCardProps) {
   return (
     <Card className="w-64">
       <img 
@@ -38,7 +41,9 @@ export default function BookCard({  title, author, genre, cover, rating }: BookC
       <CardFooter className="flex justify-end gap-2">
         <Button size="sm">Ver</Button>
         <Button size="sm">Editar</Button>
-        <Button size="sm" variant="destructive">Excluir</Button>
+        <Button size="sm" variant="destructive" onClick={() => onDelete(id)}>
+          Excluir
+        </Button>
       </CardFooter>
     </Card>
   );
