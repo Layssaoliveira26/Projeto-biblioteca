@@ -6,43 +6,41 @@ import Link from "next/link";
 
 
 
-interface BookCardProps {
+export interface BookCardProps {
+  id: string;
   title: string;
   author: string;
-  imageSrc: string;
-  gender: string;
-  date: number;
+  genre: string;
+  year: number;
+  pages: number;
+  rating: number;
+  synopsis: string;
+  cover: string;
+  status: string;
+  totalPaginasLidas: number;
 }
 
-export default function BookCard({ title, author, imageSrc, gender, date }: BookCardProps) {
+export default function BookCard({  title, author, genre, cover, rating }: BookCardProps) {
   return (
-    <div className="flex justify-center mt-3">
-        <Card className="w-64">
-          <img 
-            src={imageSrc} 
-            alt={`Capa do livro ${title}`} 
-            className="w-60 h-60 object-cover rounded-t-md"
-          />
-          <CardHeader>
-            <CardTitle>{title}</CardTitle>
-            <StarRating rating={4} />
-          </CardHeader>
-          <CardContent>
-            <p className="mt-[-10] mb-2">{author}</p>
-            
-            <div className="flex gap-3">
-              <Badge variant="outline">{gender}</Badge>   
-              <Badge variant="outline">{date}</Badge>
-            </div>
-          </CardContent>
-          <CardFooter className="flex justify-center gap-2">
-            <Link href="/view-book">
-            <Button size="sm">Ver</Button>
-            </Link>
-            <Button size="sm">Editar</Button>
-            <Button size="sm" variant="destructive">Excluir</Button>
-          </CardFooter>
-        </Card>
-    </div>
+    <Card className="w-64">
+      <img 
+        src={cover} 
+        alt={`Capa do livro ${title}`} 
+        className="w-full h-40 object-cover rounded-t-md"
+      />
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p>{author}</p>
+        <StarRating rating={rating} />
+        <Badge variant="outline">{genre}</Badge>   
+      </CardContent>
+      <CardFooter className="flex justify-end gap-2">
+        <Button size="sm">Ver</Button>
+        <Button size="sm">Editar</Button>
+        <Button size="sm" variant="destructive">Excluir</Button>
+      </CardFooter>
+    </Card>
   );
 }
