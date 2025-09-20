@@ -3,19 +3,28 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 interface ReportCardProps{
     title: string;
     value: number;
+    image: string;
 }
 
-export default function ReportCard({title, value}: ReportCardProps){
-    return(
-    <Card className="w-40 h-20 flex flex-col p-2">
-        <CardHeader className="flex items-center justify-center p-0">
-            <CardTitle className="text-sm">{title}</CardTitle>
-        </CardHeader>
+export default function ReportCard({ title, value, image }: ReportCardProps) {
+  return (
+    <Card className="w-40 h-28 md:w-60 flex flex-row p-2 gap-2 bg-[#f9f8f6]">
+  <div className="w-15 h-23 md:w-15 md:h-22 overflow-hidden">
+    <img
+      src={image}
+      className="w-full h-full object-cover"
+    />
+  </div>
 
-        <CardContent className="flex items-center justify-center">
-            <p className="text-lg font-bold">{value}</p>
-        </CardContent>
-    </Card>
+  <div className="flex flex-col justify-center items-start flex-1 p-2">
+    <CardHeader className="p-0">
+      <CardTitle className="text-sm md:whitespace-nowrap">{title}</CardTitle>
+    </CardHeader>
 
-    )
+    <CardContent className="p-0">
+      <p className="text-lg font-bold text-center">{value}</p>
+    </CardContent>
+  </div>
+</Card>
+  );
 }

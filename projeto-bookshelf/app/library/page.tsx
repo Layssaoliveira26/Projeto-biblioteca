@@ -14,7 +14,7 @@ export default function LibraryPage() {
       <div>
         <GoBackButton />
       </div>
-      <div className="flex justify-between mt-6">
+      <div className="flex justify-between mt-6 px-5 md:px-12">
       <h1 className="text-2xl font-bold mb-4">Biblioteca</h1>
       <Link href="/new-book">
           <Button size="sm">Adicionar Livro</Button>
