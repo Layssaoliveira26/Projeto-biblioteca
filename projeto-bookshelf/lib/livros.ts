@@ -1,9 +1,10 @@
 import { BookCardProps } from "@/app/library/bookCard";
 
+
 export const livros: BookCardProps[] = [
     {
         id: "",
-        title:"A Fúria do Reis",
+        title:"teste",
         author:"George R.R. Martin",
         genre: "Teste1",
         year: 1998,

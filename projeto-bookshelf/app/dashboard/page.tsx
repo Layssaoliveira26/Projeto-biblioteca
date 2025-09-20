@@ -1,11 +1,13 @@
+'use client' 
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button"
 import ReportCard from "./reportCard";
-import { livros } from "@/lib/livros";
+import { useLivros } from "@/context/LivrosContext";
 
 
 export default function Home() {
-  let paginasLidas: number = 0;
+  const { livros } = useLivros();
 
   return (
     <>

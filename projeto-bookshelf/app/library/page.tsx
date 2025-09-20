@@ -1,12 +1,25 @@
+'use client'
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import BookCard from "./bookCard";
 import { Input } from "@/components/ui/input"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
-import { livros } from "@/lib/livros";
-
+import { useState } from "react";
+import { useLivros } from "@/context/LivrosContext";
 
 export default function LibraryPage() {
+  const { livros } = useLivros();
+  const [livrosFiltrados, setLivrosFiltrados] = useState(livros);
+
+  function buscarLivro(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter") {
+      const filtrados = livros.filter((livro) => livro.title.toLowerCase().includes(event.target.value.toLowerCase()))
+      setLivrosFiltrados(filtrados)
+    }
+    
+  }
+  
   
   return (
     <div className="p-4 ">
@@ -16,7 +29,7 @@ export default function LibraryPage() {
         </Link>
 
     <div className="flex md:flex-row items-start md:items-center justify-between gap-3 p-4 md:p-8 lg:p-12">
-      <Input type="" placeholder="Digite o nome do livro" />
+      <Input type="" placeholder="Digite o nome do livro" onKeyDown={buscarLivro}/>
 
       <Select>
         <SelectTrigger className="w-[180px]">
@@ -31,7 +44,7 @@ export default function LibraryPage() {
     </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {livros.map((livro, index) => (
+        {livrosFiltrados.map((livro, index) => (
           <BookCard 
             key={index}
             id={index.toString()}
