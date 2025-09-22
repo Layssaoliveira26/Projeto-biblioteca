@@ -32,13 +32,7 @@ export const options: Generos[] = [
         genero: "História"
     },
     {
-        genero: "Romance"
-    },
-    {
         genero: "Biografia"
-    },
-    {
-        genero: "História"
     },
     {
         genero: "Autoajuda"
@@ -60,7 +54,11 @@ export const options: Generos[] = [
     },
     {
         genero: "Poesia"
+    },
+    {
+        genero: "Aventura"
     }
+
 ]
 
 export const opcoesLeitura = [
