@@ -1,5 +1,7 @@
 'use client'
+
 import Link from 'next/link'
+import GoBackButton from "@/components/ui/custom-components/goBackButton";
 import { Button } from "@/components/ui/button";
 import { IoMdArrowBack, IoMdImages } from "react-icons/io";
 import { opcoesLeitura, options } from '@/lib/options';
@@ -14,15 +16,7 @@ import { title } from 'process';
 export default function NewBookPage() {
   const { register, handleSubmit, reset } = useForm()
   const [numStars, setNumStars] = useState(0)
-  const { addLivro } = useLivros();
-
-  function limparEstrelas() {
-    setNumStars(0);
-  }
-
-  function sumStars() {
-    setNumStars(numStars+1);
-  }
+  const { addLivro, addId, idLivro } = useLivros();
 
   type FormData = {
     title: string;
@@ -37,10 +31,18 @@ export default function NewBookPage() {
     notes: string;
   };
 
+  function limparEstrelas() {
+    setNumStars(0);
+  }
+
+  function sumStars() {
+    setNumStars(numStars+1);
+  }
+
   function onSubmit(userData: FormData): void {
 
     const novoLivro:BookCardProps = {
-          id: "",
+          id: String(idLivro),
           title: userData.title,
           author: userData.author,
           genre: userData.genrer,
@@ -48,30 +50,30 @@ export default function NewBookPage() {
           pages: Number(userData.qtdPages),
           rating: numStars,
           synopsis: userData.notes,
-          cover: userData.url,
+          cover: userData.url || "https://cdn-icons-png.flaticon.com/512/5999/5999928.png",
           status: userData.status,
           totalPaginasLidas: Number(userData.actualPage)
       }
       addLivro(novoLivro);
+      addId();
       reset();
       setNumStars(0);
+      console.log(idLivro)
   }
 
   return (
     <div className="w-full h-full bg-[#FFFFFF] md:p-8 lg:p-12 ">
       {/*Div como repartição um, com cor diferenciada*/}
-      <div className='h-1/3 w-full bg-[#FFF9F9] p-4'>
-        <Button className='bg-[#FFF9F9] text-gray-700 border text-xs hover:bg-[#fffdfd]' >
-          <IoMdArrowBack />
-          <Link href="/" className='font-black  '>Voltar para o início</Link>
-        </Button>
+      <div className='h-1/3 w-full bg-[#f9f8f6] p-4'>
+        <GoBackButton />
         {/* Área do preview da capa do livro */}
         <div className='flex justify-center justify-items-center justify-content-center  '>
           <div className='w-3/8 bg-[#FFFEFE] p-4 mt-4 mb-2 justify-items-center  text-center border border-dashed border-gray-400 rounded-md'>
             <IoMdImages className='h-8 w-8 text-gray-400'/>
             <span className='text-xs text-gray-500'>Preview da capa <br/> do livro</span>
-          </div>
         </div>
+      </div> 
+
       </div>
       {/* Área do progresso de leitura */}
       <div className='ml-5 mr-5 p-2 border border-gray-200 rounded-md border-1'>

@@ -14,8 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BookShelf",
+  title: "Ressonância Literária",
   description: "",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({

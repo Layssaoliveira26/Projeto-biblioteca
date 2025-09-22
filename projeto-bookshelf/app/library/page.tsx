@@ -1,5 +1,6 @@
 'use client'
 
+import GoBackButton from "@/components/ui/custom-components/goBackButton";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import BookCard from "./bookCard";
@@ -23,10 +24,15 @@ export default function LibraryPage() {
   
   return (
     <div className="p-4 ">
+      <div>
+        <GoBackButton />
+      </div>
+      <div className="flex justify-between mt-6 px-5 md:px-12">
       <h1 className="text-2xl font-bold mb-4">Biblioteca</h1>
       <Link href="/new-book">
           <Button size="sm">Adicionar Livro</Button>
         </Link>
+      </div>
 
     <div className="flex md:flex-row items-start md:items-center justify-between gap-3 p-4 md:p-8 lg:p-12">
       <Input type="" placeholder="Digite o nome do livro" onKeyDown={buscarLivro}/>
