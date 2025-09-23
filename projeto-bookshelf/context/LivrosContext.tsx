@@ -6,6 +6,7 @@ import { BookCardProps } from "@/app/library/bookCard";
 
 type LivrosContextType = {
     livros: BookCardProps[];
+    setLivros: React.Dispatch<React.SetStateAction<BookCardProps[]>>;
     addLivro: (livro: BookCardProps) => void;
     idLivro: number;
     addId: () => void
@@ -26,7 +27,7 @@ export function LivrosProvider({ children }: { children: React.ReactNode}) {
     }
 
     return (
-        <LivrosContext.Provider value={{livros, addLivro, idLivro, addId}}>
+        <LivrosContext.Provider value={{livros, setLivros, addLivro, idLivro, addId}}>
             {children}
         </LivrosContext.Provider>
     );

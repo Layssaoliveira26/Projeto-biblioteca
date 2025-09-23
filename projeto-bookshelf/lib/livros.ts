@@ -7,14 +7,15 @@ export const livros: BookCardProps[] = [
         id: "0",
         title:"teste",
         author:"George R.R. Martin",
-        genre: "Teste1",
+        genre: "Romance",
         year: 1998,
         pages: 648,
         rating: 1,
         synopsis: "Em A fúria dos reis, seis facções disputam o controle de uma terra dividida e o direito de ocupar o Trono de Ferro de Westeros - e estão dispostos a encarar tempestades, levantes e guerras para isso. Nesta história, irmão trama contra irmão e os mortos se levantam para caminhar pela noite.",
         cover: "https://i.pinimg.com/736x/37/15/6a/37156acb48cf140bc48c4068210e9ece.jpg",
         status: "QUERO LER",
-        totalPaginasLidas: 50
+        totalPaginasLidas: 50,
+        onDelete: undefined
     },
     {
         id: "1",
@@ -27,7 +28,8 @@ export const livros: BookCardProps[] = [
         synopsis: "Em A fúria dos reis, seis facções disputam o controle de uma terra dividida e o direito de ocupar o Trono de Ferro de Westeros - e estão dispostos a encarar tempestades, levantes e guerras para isso. Nesta história, irmão trama contra irmão e os mortos se levantam para caminhar pela noite.",
         cover: "https://i.pinimg.com/736x/a4/d7/b3/a4d7b39a93399884cffd3a9012c3349d.jpg",
         status: "QUERO LER",
-        totalPaginasLidas: 500
+        totalPaginasLidas: 500,
+        onDelete: undefined
     },
     {
         id: "2",
@@ -40,33 +42,36 @@ export const livros: BookCardProps[] = [
         synopsis: "Em A fúria dos reis, seis facções disputam o controle de uma terra dividida e o direito de ocupar o Trono de Ferro de Westeros - e estão dispostos a encarar tempestades, levantes e guerras para isso. Nesta história, irmão trama contra irmão e os mortos se levantam para caminhar pela noite.",
         cover: "https://i.pinimg.com/736x/a4/d7/b3/a4d7b39a93399884cffd3a9012c3349d.jpg",
         status: "ABANDONADO",
-        totalPaginasLidas: 500
+        totalPaginasLidas: 500,
+        onDelete: undefined
     },
     {
         id: "3",
         title:"A Fúria do Reis",
         author:"George R.R. Martin",
-        genre: "Teste",
+        genre: "História",
         year: 1998,
         pages: 648,
         rating: 4,
         synopsis: "Em A fúria dos reis, seis facções disputam o controle de uma terra dividida e o direito de ocupar o Trono de Ferro de Westeros - e estão dispostos a encarar tempestades, levantes e guerras para isso. Nesta história, irmão trama contra irmão e os mortos se levantam para caminhar pela noite.",
         cover: "https://i.pinimg.com/736x/a4/d7/b3/a4d7b39a93399884cffd3a9012c3349d.jpg",
         status: "LIDO",
-        totalPaginasLidas: 500
+        totalPaginasLidas: 500,
+        onDelete: undefined
     }, 
     {
         id: "4",
         title:"A Fúria do Reis",
         author:"George R.R. Martin",
-        genre: "Teste",
+        genre: "Programação",
         year: 1998,
         pages: 648,
         rating: 6,
         synopsis: "Em A fúria dos reis, seis facções disputam o controle de uma terra dividida e o direito de ocupar o Trono de Ferro de Westeros - e estão dispostos a encarar tempestades, levantes e guerras para isso. Nesta história, irmão trama contra irmão e os mortos se levantam para caminhar pela noite.",
         cover: "https://i.pinimg.com/736x/a4/d7/b3/a4d7b39a93399884cffd3a9012c3349d.jpg",
         status: "LIDO",
-        totalPaginasLidas: 500
+        totalPaginasLidas: 500,
+        onDelete: undefined
     },
     {
         id: "5",
@@ -79,7 +84,8 @@ export const livros: BookCardProps[] = [
         synopsis: "Em A fúria dos reis, seis facções disputam o controle de uma terra dividida e o direito de ocupar o Trono de Ferro de Westeros - e estão dispostos a encarar tempestades, levantes e guerras para isso. Nesta história, irmão trama contra irmão e os mortos se levantam para caminhar pela noite.",
         cover: "https://i.pinimg.com/736x/a4/d7/b3/a4d7b39a93399884cffd3a9012c3349d.jpg",
         status: "LIDO",
-        totalPaginasLidas: 500
+        totalPaginasLidas: 500,
+        onDelete: undefined
     }
     
 ]

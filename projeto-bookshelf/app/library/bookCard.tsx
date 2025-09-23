@@ -1,3 +1,5 @@
+"Use client";
+
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
@@ -22,9 +24,12 @@ export interface BookCardProps {
   cover: string;
   status: string;
   totalPaginasLidas: number;
+  onDelete: (id: string) => void;
 }
 
-export default function BookCard({  title, author, genre, cover, rating, id }: BookCardProps) {
+
+export default function BookCard({ title, author, genre, cover, rating, id, onDelete }: BookCardProps) {
+
   return (
     <div className="flex justify-center">
     <Card className="w-64">
@@ -50,7 +55,10 @@ export default function BookCard({  title, author, genre, cover, rating, id }: B
         <Button size="sm">
         <CiEdit />
         Editar</Button>
-        <Button size="sm" variant="destructive">
+        <Button size="sm" variant="destructive" onClick={() => {
+          console.log("Exluir", id)
+          onDelete(id)
+        }}>
         <CiTrash />
         Excluir</Button>
       </CardFooter>
