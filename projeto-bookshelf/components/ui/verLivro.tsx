@@ -19,12 +19,12 @@ export default function DadoLivro({ id }: { id: string }) {
                 <img
                     src={ livroVisto.cover }
                     alt="Capa do livro"
-                    className="w-48 h-50 object-cover rounded-md"
+                    className="w-[120px] h-[176px] sm:w-[160px] sm:h-[224px] md:w-[192px] md:h-[272px] object-cover rounded-md"
                 />
             </div>
-            <div className="w-full flex-1 flex flex-col p-4 bg-white">
+            <div className="w-full flex-1 flex flex-col p-4 bg-[var(--background)] text-[var(--foreground)] ">
                 <h1 className="mb-2 text-[20px] font-bold">{livroVisto.title}</h1>
-                <h2 className="mb-2 text-[15px] text-gray-600">{livroVisto.author}</h2>
+                <h2 className="mb-2 text-[15px]">{livroVisto.author}</h2>
                 <div className="flex mb-4 gap-2">
                     <Badge variant="outline">{livroVisto.genre}</Badge>
                     <Badge variant="outline">{livroVisto.year}</Badge>
@@ -33,7 +33,7 @@ export default function DadoLivro({ id }: { id: string }) {
                 <StarRating rating={livroVisto.rating} />
                 <div className="flex-1 mt-3">
                     <h3 className="font-semibold mb-2">{livroVisto.status} </h3>
-                    <p className="text-gray-700">{livroVisto.synopsis}</p>
+                    <p>{livroVisto.synopsis}</p>
                 </div>
             </div>
         </main>

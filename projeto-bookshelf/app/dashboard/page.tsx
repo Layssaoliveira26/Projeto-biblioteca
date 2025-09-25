@@ -1,37 +1,51 @@
 'use client'
 
+import { useState, useEffect} from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button"
 import ReportCard from "./reportCard";
 import { useLivros } from "@/context/LivrosContext";
+import ChangeTheme from './changeTheme';
 
 
 export default function Home() {
-  const { livros } = useLivros();
+  const { livros = [] } = useLivros();
 
   return (
   <div className="">
       {/* Header */}
-      <div className="overflow-auto flex items-center justify-between border-[#4E402E] rounded-md py-1 shadow-md bg-[#f9f8f6]">
-        <div className="flex items-center gap-3 ml-5 xl:ml-16 2xl:ml-46">
-          <img src="/logo.png" alt="logo" className="w-18 h-18 xl:w-20 xl:h-20" />
-          <h1 className="font-medium font-sans mb-0 md:mb-1 sm:text-xs md:text-xl ">Dashboard</h1>
+      <div className="overflow-auto flex flex-col md:flex-row md:items-center md:justify-between border-[#4E402E] rounded-md py-2 shadow-md bg-[var(--card)]">
+        <div className="flex flex-row items-center justify-start w-full md:flex-row md:w-auto md:ml-16 gap-3">
+          <img 
+            src="/logo.png" 
+            alt="logo" 
+            className="w-18 h-18 xl:w-20 xl:h-20 block dark:hidden" 
+          />
+          <img 
+            src="/logo-2.png" 
+            alt="logo" 
+            className="w-18 h-18 xl:w-20 xl:h-20 hidden dark:block" 
+          />
+          <h1 className="font-bold font-sans mb-0 md:mb-1 text-2xl md:text-3xl xl:text-3xl">Dashboard</h1>
         </div>
 
-        <div className="flex flex-col md:flex-row md:gap-5 gap-2 mr-10 xl:mr-18 2xl:mr-46">
+        <div className="flex flex-row justify-start items-center md:gap-6 gap-3 mt-3 md:mt-0 ml-2 xl:mr-18 ">
+          {/* Modo escuro, claro e sistema */}
+          <ChangeTheme />
           <Link href="/library">
-            <Button size="sm" className="w-24 text-xs xl:w-28 xl:text-sm">Biblioteca</Button>
+            <Button size="sm" className="w-20 text-[10px] md:w-24 md:text-xs xl:w-28 xl:text-sm">Biblioteca</Button>
           </Link>
           <Link href="/new-book">
-            <Button size="sm" className="w-24 text-xs xl:w-28 xl:text-sm">Adicionar Livro</Button>
+            <Button size="sm" className="w-20 text-[10px] md:w-24 md:text-xs xl:w-28 xl:text-sm">Adicionar Livro</Button>
           </Link>
+
         </div>
       </div>
         
       {/* Seção principal */}
       {/* Mobile: row (texto à esquerda + 1 imagem à direita)
           Desktop: row-reverse (texto esquerda + imagens direita) */}
-      <div className="flex flex-row-reverse md:flex-row-reverse items-center justify-center md:mt-7 px-6 sm:pl-10 pr-10 mt-10 mb-5 md:px-12 md:gap-20 lg:px-20 gap-6 2xl:ml-30 2xl:mt-15">
+      <div className="flex flex-row-reverse md:flex-row-reverse items-center justify-center md:mt-7 px-6 sm:pl-10 pr-10 mt-10 mb-5 md:px-12 md:gap-80 lg:px-20 gap-6 2xl:ml-30 2xl:mt-15">
         
         {/* Imagens */}
         <div className="flex w-1/2 justify-center md:justify-end 2xl:mr-30">

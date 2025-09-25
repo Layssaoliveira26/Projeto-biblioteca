@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useState } from "react";
 import { useLivros } from "@/context/LivrosContext";
 import { options } from "@/lib/options";
+import ChangeTheme from "../dashboard/changeTheme";
+
 
 export default function LibraryPage() {
   const { livros, setLivros } = useLivros();
@@ -39,11 +41,14 @@ export default function LibraryPage() {
         <GoBackButton />
       </div>
 
-      <div className="flex justify-between mt-6 px-5 md:px-12">
-        <h1 className="text-2xl font-bold mb-4">Biblioteca</h1>
-        <Link href="/new-book">
-          <Button size="sm">Adicionar Livro</Button>
-        </Link>
+      <div className="flex justify-between mt-6 px-5 md:px-12 items-center">
+        <h1 className="text-2xl font-bold ">Biblioteca</h1>
+        <div className="flex items-center gap-4">
+          <ChangeTheme />
+          <Link href="/new-book">
+            <Button size="sm">Adicionar Livro</Button>
+          </Link>
+        </div>
       </div>
 
       <div className="flex md:flex-row items-start md:items-center justify-between gap-3 p-4 md:p-8 lg:p-12">
@@ -52,6 +57,7 @@ export default function LibraryPage() {
           placeholder="Digite o nome do livro"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)} // busca em tempo real
+          className="border border-[var(--border)] focus:border-[var(--border)] focus:ring-1 focus:ring-[var(--ring)]"
         />
 
         <Select
@@ -75,7 +81,7 @@ export default function LibraryPage() {
         </Select>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         {livrosFiltrados.length > 0 ? (
           livrosFiltrados.map((livro, index) => (
             <BookCard

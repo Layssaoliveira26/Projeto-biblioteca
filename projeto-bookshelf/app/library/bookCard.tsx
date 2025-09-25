@@ -46,21 +46,21 @@ export default function BookCard({ title, author, genre, cover, rating, id, onDe
         <p className="-mt-4">{author}</p>
         <Badge variant="outline" className="mt-3">{genre}</Badge>   
       </CardContent>
-      <CardFooter className="flex justify-center gap-2">
+      <CardFooter className="flex justify-center gap-5">
         <Link href={`/view-book?id=${id}`}>
           <Button size="sm">
           <LuEye />
-          Ver</Button>
+          </Button>
         </Link>
         <Button size="sm">
         <CiEdit />
-        Editar</Button>
+        </Button>
         <Button size="sm" variant="destructive" onClick={() => {
           console.log("Exluir", id)
           onDelete(id)
         }}>
         <CiTrash />
-        Excluir</Button>
+        </Button>
       </CardFooter>
     </Card>
   </div>
