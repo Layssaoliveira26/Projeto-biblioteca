@@ -1,5 +1,6 @@
 "Use client";
 
+import { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
@@ -29,6 +30,17 @@ export interface BookCardProps {
 
 
 export default function BookCard({ title, author, genre, year, cover, rating, id, onDelete }: BookCardProps) {
+const [isDeleting, setIsDeleting] = useState(false);
+
+async function handleDelete() {
+    setIsDeleting(true);
+
+ await new Promise((res) => setTimeout(res, 1000));
+
+    onDelete(id);
+
+    setIsDeleting(false);
+  }
 
   return (
     <div className="flex justify-center">
@@ -56,14 +68,13 @@ export default function BookCard({ title, author, genre, year, cover, rating, id
         <Button size="sm">
         <CiEdit />
         Editar</Button>
-        <Button size="sm" variant="destructive" onClick={() => {
-          console.log("Exluir", id)
-          onDelete(id)
-        }}>
-        <CiTrash />
-        Excluir</Button>
-      </CardFooter>
-    </Card>
-  </div>
+        <Button size="sm" variant="destructive" onClick={async () => { setIsDeleting(true); await onDelete(id); setIsDeleting(false);
+  }}
+>
+  {isDeleting ? "Excluindo..." : "Excluir"}
+</Button>
+        </CardFooter>
+      </Card>
+    </div>
   );
 }
