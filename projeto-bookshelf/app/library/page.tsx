@@ -3,24 +3,53 @@
 import GoBackButton from "@/components/ui/custom-components/goBackButton";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import BookCard from "./bookCard";
+import { lazy, Suspense, useEffect } from "react";
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useState } from "react";
 import { useLivros } from "@/context/LivrosContext";
 import { options } from "@/lib/options";
 import { Search } from "lucide-react";  
+import { livros as livrosData } from "@/lib/livros"; 
 
 export default function LibraryPage() {
   const { livros, setLivros } = useLivros();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("all");
+  const BookCard = lazy(() => import("./bookCard"));
+  const [isLoading, setIsLoading] = useState(true);
 
-  function handleDelete(id: string) {
-    const filtro = livros.filter((livro) => livro.id !== id)
-    setLivros(filtro);
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      setLivros(livrosData);
+      setIsLoading(false);
+    }, 1000);
+  }, [setLivros]);
 
+ function handleDelete(id: string) {
+  return new Promise<void>((resolve) => {
+    setLivros((prev) => prev.filter((livro) => livro.id !== id));
+    resolve();
+  });
+}
+
+  function BookCardSkeleton() {
+  return (
+    <div className="border rounded p-4 animate-pulse h-64 flex flex-col justify-between">
+      <div className="bg-gray-300 h-32 mb-2 rounded" />
+      <div className="h-4 bg-gray-300 mb-1 rounded" />
+      <div className="h-4 bg-gray-300 w-1/2 rounded" />
+      <div className="h-8 bg-gray-300 mt-2 rounded" />
+    </div>
+  );
+}
+
+async function handleAddBook(newBook) {
+  setIsSubmitting(true);
+  await new Promise((res) => setTimeout(res, 1000)); 
+  setLivros((prev) => [...prev, newBook]);
+  setIsSubmitting(false);
+}
   // Aqui junta busca + filtro
   const livrosFiltrados = livros.filter((livro) => {
     const matchSearch = livro.title
@@ -83,29 +112,38 @@ export default function LibraryPage() {
         </Select>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+
+     {isLoading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <BookCardSkeleton key={i} />
+        ))}
+        </div>
+      ) : (
+     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {livrosFiltrados.length > 0 ? (
-          livrosFiltrados.map((livro, index) => (
-            <BookCard
-              key={livro.id ?? index}
-              id={livro.id}
-              title={livro.title}
-              author={livro.author}
-              genre={livro.genre}
-              year={livro.year}
-              pages={livro.pages}
-              rating={livro.rating}
-              synopsis={livro.synopsis}
-              cover={livro.cover}
-              status={livro.status}
-              totalPaginasLidas={livro.totalPaginasLidas}
-              onDelete={() => handleDelete(livro.id)}
-            />
-          ))
-        ) : (
-          <p className="text-gray-500">Nenhum livro encontrado.</p>
-        )}
-      </div>
-    </div>
-  );
-}
+          livrosFiltrados.map((livro) => (
+  <Suspense key={livro.id} fallback={<BookCardSkeleton />}>
+    <BookCard
+      id={livro.id}
+      title={livro.title}
+      author={livro.author}
+      genre={livro.genre}
+      year={livro.year}
+      pages={livro.pages}
+      rating={livro.rating}
+      synopsis={livro.synopsis}
+      cover={livro.cover}
+      status={livro.status}
+      totalPaginasLidas={livro.totalPaginasLidas}
+      onDelete={() => handleDelete(livro.id)}
+    />
+  </Suspense>
+ ))
+ ) : (
+    <p className="text-gray-500">Nenhum livro encontrado.</p>
+  )}
+  </div>
+  )}
+  </div>
+ );

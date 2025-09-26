@@ -17,6 +17,7 @@ export default function NewBookPage() {
   const { register, handleSubmit, reset } = useForm()
   const [numStars, setNumStars] = useState(0)
   const { addLivro, addId, idLivro } = useLivros();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   type FormData = {
     title: string;
@@ -39,7 +40,8 @@ export default function NewBookPage() {
     setNumStars(numStars+1);
   }
 
-  function onSubmit(userData: FormData): void {
+  async function onSubmit(userData: FormData) {
+  setIsSubmitting(true);
 
     const novoLivro:BookCardProps = {
           id: String(idLivro),
@@ -54,11 +56,15 @@ export default function NewBookPage() {
           status: userData.status,
           totalPaginasLidas: Number(userData.actualPage)
       }
+
+      await new Promise((res) => setTimeout(res, 1000));
+
       addLivro(novoLivro);
       addId();
       reset();
       setNumStars(0);
       console.log(idLivro)
+      setIsSubmitting(false);
   }
 
   return (
@@ -144,10 +150,14 @@ export default function NewBookPage() {
           <textarea {...register("notes")} className='border border-gray-300 rounded rouded-sm ml-5 mr-5 pl-1.5' placeholder='Anotações sobre o livro'></textarea>
         </div>
         <div className='flex justify-center mt-4 mb-4'>
-          <Button className='bg-[#252525] text-white font-semibold border text-xs ml-5 justify-center' >
-            Cadastrar
-          </Button>
-        </div>
+        <Button 
+    type="submit"
+    className='bg-[#252525] text-white font-semibold border text-xs ml-5 justify-center'
+    disabled={isSubmitting} 
+  >
+    {isSubmitting ? "Cadastrando..." : "Cadastrar"} 
+  </Button>
+      </div>
       </form>
     </div>
   );
