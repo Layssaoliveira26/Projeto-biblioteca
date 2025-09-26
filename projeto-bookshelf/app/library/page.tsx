@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useLivros } from "@/context/LivrosContext";
 import { options } from "@/lib/options";
 import ChangeTheme from "../dashboard/changeTheme";
-
+import { Search } from "lucide-react";  
 
 export default function LibraryPage() {
   const { livros, setLivros } = useLivros();
@@ -50,15 +50,21 @@ export default function LibraryPage() {
           </Link>
         </div>
       </div>
-
-      <div className="flex md:flex-row items-start md:items-center justify-between gap-3 p-4 md:p-8 lg:p-12">
-        <Input
-          type="text"
-          placeholder="Digite o nome do livro"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)} // busca em tempo real
-          className="border border-[var(--border)] focus:border-[var(--border)] focus:ring-1 focus:ring-[var(--ring)]"
-        />
+      
+  <div className="flex md:flex-row items-start md:items-center justify-between gap-3 p-4 md:p-8 lg:p-12">
+    <div className="relative flex-1">
+      <Input
+       type="text"
+       placeholder="Digite o nome do livro"
+       value={searchTerm}
+       onChange={(e) => setSearchTerm(e.target.value)} 
+       className="pr-10 border border-[var(--border)] focus:border-[var(--border)] focus:ring-1 focus:ring-[var(--ring)]"
+    />
+    <Search 
+      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" 
+      size={20} 
+    />
+    </div>  
 
         <Select
           value={selectedGenre}

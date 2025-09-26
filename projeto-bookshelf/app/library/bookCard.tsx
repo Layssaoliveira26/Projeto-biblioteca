@@ -28,7 +28,7 @@ export interface BookCardProps {
 }
 
 
-export default function BookCard({ title, author, genre, cover, rating, id, onDelete }: BookCardProps) {
+export default function BookCard({ title, author, genre, year, cover, rating, id, onDelete }: BookCardProps) {
 
   return (
     <div className="flex justify-center">
@@ -44,7 +44,8 @@ export default function BookCard({ title, author, genre, cover, rating, id, onDe
       </CardHeader>
       <CardContent>
         <p className="-mt-4">{author}</p>
-        <Badge variant="outline" className="mt-3">{genre}</Badge>   
+        <Badge variant="outline" className="mt-3">{genre}</Badge>
+        <Badge variant="outline" className="mt-3">{year}</Badge>   
       </CardContent>
       <CardFooter className="flex justify-center gap-5">
         <Link href={`/view-book?id=${id}`}>
