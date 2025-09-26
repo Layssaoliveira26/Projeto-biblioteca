@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useState } from "react";
 import { useLivros } from "@/context/LivrosContext";
 import { options } from "@/lib/options";
+import { Search } from "lucide-react";  
 
 export default function LibraryPage() {
   const { livros, setLivros } = useLivros();
@@ -45,14 +46,21 @@ export default function LibraryPage() {
           <Button size="sm">Adicionar Livro</Button>
         </Link>
       </div>
-
-      <div className="flex md:flex-row items-start md:items-center justify-between gap-3 p-4 md:p-8 lg:p-12">
-        <Input
-          type="text"
-          placeholder="Digite o nome do livro"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)} // busca em tempo real
-        />
+      
+  <div className="flex md:flex-row items-start md:items-center justify-between gap-3 p-4 md:p-8 lg:p-12">
+    <div className="relative flex-1">
+      <Input
+       type="text"
+       placeholder="Digite o nome do livro"
+       value={searchTerm}
+       onChange={(e) => setSearchTerm(e.target.value)} 
+       className="pr-10"
+    />
+    <Search 
+      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" 
+      size={20} 
+    />
+    </div>  
 
         <Select
           value={selectedGenre}
