@@ -14,8 +14,8 @@ export default function Home() {
   return (
   <div className="">
       {/* Header */}
-      <div className="overflow-auto flex flex-col md:flex-row md:items-center md:justify-between border-[#4E402E] rounded-md py-2 shadow-md bg-[var(--card)]">
-        <div className="flex flex-row items-center justify-start w-full md:flex-row md:w-auto md:ml-16 gap-3">
+      <div className="overflow-auto flex flex-col md:flex-row md:items-center md:justify-between rounded-md py-2 shadow-md bg-[var(--card)] px-4 sm:px-6 md:px-12 lg:px-24 xl:px-16 2xl:px-16">
+        <div className="flex flex-row items-center justify-start w-full md:flex-row md:w-auto gap-3">
           <img 
             src="/logo.png" 
             alt="logo" 
@@ -29,7 +29,7 @@ export default function Home() {
           <h1 className="font-bold font-sans mb-0 md:mb-1 text-2xl md:text-3xl xl:text-3xl">Dashboard</h1>
         </div>
 
-        <div className="flex flex-row justify-start items-center md:gap-6 gap-3 mt-3 md:mt-0 ml-2 xl:mr-18 ">
+        <div className="flex flex-row justify-start items-center md:gap-6 gap-3 mt-3 md:mt-0 ml-4">
           {/* Modo escuro, claro e sistema */}
           <ChangeTheme />
           <Link href="/library">
@@ -45,7 +45,7 @@ export default function Home() {
       {/* Seção principal */}
       {/* Mobile: row (texto à esquerda + 1 imagem à direita)
           Desktop: row-reverse (texto esquerda + imagens direita) */}
-      <div className="flex flex-row-reverse md:flex-row-reverse items-center justify-center md:mt-7 px-6 sm:pl-10 pr-10 mt-10 mb-5 md:px-12 md:gap-80 lg:px-20 gap-6 2xl:ml-30 2xl:mt-15">
+      <div className="flex flex-row-reverse lg:flex-row-reverse items-center justify-center mt-10 md:mt-16 mb-5 px-6 sm:px-10 md:px-12 lg:px-20 gap-6 md:gap-12 lg:gap-20 xl:gap-32 2xl:gap-80">
         
         {/* Imagens */}
         <div className="flex w-1/2 justify-center md:justify-end 2xl:mr-30">
@@ -59,8 +59,8 @@ export default function Home() {
           </div>
 
           {/* Imagens completas no desktop */}
-          <div className="hidden md:flex flex-row gap-5 md:mt-8">
-            <div className="flex flex-col w-1/3 justify-center content-center text-center">
+          <div className="hidden md:flex flex-row gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 justify-center">
+            <div className="hidden lg:flex flex-col w-1/3 justify-center content-center text-center">
               <div className="livros-area flex flex-col w-32 h-48 md:w-45 md:h-60 2xl:w-60 2xl:h-80" id="livros-area">
                 <img
                   src="https://i.pinimg.com/1200x/9d/82/d6/9d82d654e41a805c10ac4e2a6a772ce9.jpg"
@@ -69,25 +69,25 @@ export default function Home() {
                 />
               </div>
               <div className="flex flex-col">
-                <p className="livros-area text-base font-black mt-2 ">
+                <p className="livros-area text-sm md:text-sm lg:text-sm max-[768px]:text-[10px] text-center font-bold mt-2">
                   Alice's Adventures Underground
                 </p>
-                <p className="text-xs text-center font-inter">
+                <p className="text-xs md:text-xs lg:text-xs max-[768px]:text-[9px] text-center font-inter mb-2">
                   Lewis Carroll
                 </p>
               </div>
             </div> 
 
-            <div className="flex flex-col w-1/3 justify-center content-center text-center">
+            <div className="flex flex-col items-center text-center w-1/2">
               <div className="flex flex-col">
-                <p className="livros-area text-base font-black mt-2">
+                <p className="livros-area text-sm md:text-sm lg:text-sm max-[768px]:text-[10px] text-center font-bold mt-2">
                   The Herbwitch's Apprentice
                 </p>
-                <p className="text-xs text-center font-inter mb-2">
+                <p className="text-xs md:text-xs lg:text-xs max-[768px]:text-[9px] text-center font-inter mb-2">
                   Ireen Chau
                 </p>
               </div>
-              <div className="flex flex-col w-32 h-48 md:w-45 md:h-60 2xl:w-60 2xl:h-80">
+              <div className="flex flex-col w-32 h-48 sm:w-40 sm:h-56 lg:w-45 lg:h-60 2xl:w-60 2xl:h-80">
                 <img
                   src="https://i.pinimg.com/736x/01/83/76/018376580e76d06eac2f260ad42d5d7e.jpg"
                   alt=""
@@ -97,7 +97,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col w-1/3 justify-center content-center text-center">
-              <div className="w-32 h-48 md:w-45 md:h-60 2xl:w-60 2xl:h-80">
+              <div className="flex flex-col w-32 h-48 sm:w-40 sm:h-56 lg:w-45 lg:h-60 2xl:w-60 2xl:h-80">
                 <img
                   src="https://i.pinimg.com/736x/24/3e/41/243e4165742e6e75744d85e16bb63a77.jpg"
                   alt=""
@@ -105,21 +105,19 @@ export default function Home() {
                 />
               </div>
               <div className="flex flex-col">
-                <p className="livros-area text-sm text-center font-bold mt-2">
+                <p className="livros-area text-sm md:text-sm lg:text-sm max-[768px]:text-[10px] text-center font-bold mt-2">
                   La Jeune Fille au XVIII Siècle
                 </p>
-                <p className="text-xs text-center font-inter mb-2">
+                <p className="text-xs md:text-xs lg:text-xs max-[768px]:text-[9px] text-center font-inter mb-2">
                   Léo Claretie
                 </p>
               </div>
-              
-              
             </div>
           </div>
         </div>
         
         {/* Sessao esquerda do título e parágrafo */}
-        <div className="flex flex-col justify-center items-start text-left w-1/2">
+        <div className="flex flex-col justify-center items-start text-left w-1/2 ml-3 lg:ml-24 2xl:ml-40">
           <h1 className="text-[32px] sm:text-[42px] md:text-[65px] font-bold leading-none 2xl:text-[75px]">
             Ressonância
           </h1>

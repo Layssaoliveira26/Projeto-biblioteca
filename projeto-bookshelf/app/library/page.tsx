@@ -70,7 +70,7 @@ export default function LibraryPage() {
           value={selectedGenre}
           onValueChange={(value) => setSelectedGenre(value)}
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[180px] border border-[var(--border)] ">
             <SelectValue placeholder="Gêneros" />
           </SelectTrigger>
           <SelectContent>
