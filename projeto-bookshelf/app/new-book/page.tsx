@@ -39,7 +39,7 @@ export default function NewBookPage() {
     setNumStars(numStars+1);
   }
 
-  function onSubmit(userData: FormData): void {
+  async function onSubmit(userData: FormData): void {
 
     const novoLivro:BookCardProps = {
           id: String(idLivro),
@@ -54,11 +54,29 @@ export default function NewBookPage() {
           status: userData.status,
           totalPaginasLidas: Number(userData.actualPage)
       }
-      addLivro(novoLivro);
+    
+    try {
+      const res = await fetch('/api/books', {
+        method: 'POST',
+        headers: { 'Content-Type' : 'application/json' },
+        body: JSON.stringify(novoLivro)
+      })
+
+      if(!res.ok) {
+        throw new Error("Erro ao cadastrar novo livro.");
+      }
+
+      const createdBook = await res.json();
+      console.log("Livro cadastrado")
+
+      addLivro(createdBook);
       addId();
       reset();
       setNumStars(0);
-      console.log(idLivro)
+    } catch (error) {
+      
+    }
+      
   }
 
   return (
