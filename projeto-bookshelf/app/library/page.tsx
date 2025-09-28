@@ -3,22 +3,41 @@
 import GoBackButton from "@/components/ui/custom-components/goBackButton";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import BookCard from "./bookCard";
+import BookCard, { BookCardProps } from "./bookCard";
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useState } from "react";
-import { useLivros } from "@/context/LivrosContext";
-import { options } from "@/lib/options";
+import { useEffect, useState } from "react";
 import { Search } from "lucide-react";  
 
 export default function LibraryPage() {
-  const { livros, setLivros } = useLivros();
+  const [livros, setLivros] = useState<any[]>([])
+  const [categorias, setCategorias] = useState<any[]>([])
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("all");
 
-  function handleDelete(id: string) {
-    const filtro = livros.filter((livro) => livro.id !== id)
-    setLivros(filtro);
+  useEffect(() => {
+    async function fetchLivros() {
+      const res = await fetch("/api/books");
+      const data = await res.json();
+      setLivros(data);
+    }
+    fetchLivros();
+  }, [])
+
+  useEffect(() => {
+    async function fetchCategorias() {
+      const res = await fetch("/api/categories");
+      const data = await res.json();
+      setCategorias(data);
+    }
+    fetchCategorias();
+  }, [])
+
+  async function handleDelete(id: string) {
+    const res = await fetch(`/api/books/${id}`, {method: "DELETE"});
+    if (res.ok) {
+      setLivros((prev) => prev.filter((livro) => livro.id !== id));
+    }
   }
 
   // Aqui junta busca + filtro
@@ -71,12 +90,12 @@ export default function LibraryPage() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Todos</SelectItem>
-            {options.map((opcao) => (
+            {categorias.map((categoria) => (
               <SelectItem
-                key={opcao.genero}
-                value={opcao.genero.toLowerCase()}
+                key={categoria.genero}
+                value={categoria.genero.toLowerCase()}
               >
-                {opcao.genero}
+                {categoria.genero}
               </SelectItem>
             ))}
           </SelectContent>

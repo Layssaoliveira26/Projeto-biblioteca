@@ -1,5 +1,5 @@
+
 import { BookCardProps } from "@/app/library/bookCard";
-import { useState } from "react";
 
 
 export const livros: BookCardProps[] = [
@@ -15,7 +15,7 @@ export const livros: BookCardProps[] = [
         cover: "https://i.pinimg.com/736x/37/15/6a/37156acb48cf140bc48c4068210e9ece.jpg",
         status: "QUERO LER",
         totalPaginasLidas: 50,
-        onDelete: undefined
+        onDelete: () => {}
     },
     {
         id: "1",
@@ -29,7 +29,7 @@ export const livros: BookCardProps[] = [
         cover: "https://i.pinimg.com/736x/a4/d7/b3/a4d7b39a93399884cffd3a9012c3349d.jpg",
         status: "QUERO LER",
         totalPaginasLidas: 500,
-        onDelete: undefined
+        onDelete: () => {}
     },
     {
         id: "2",
@@ -43,7 +43,7 @@ export const livros: BookCardProps[] = [
         cover: "https://i.pinimg.com/736x/a4/d7/b3/a4d7b39a93399884cffd3a9012c3349d.jpg",
         status: "ABANDONADO",
         totalPaginasLidas: 500,
-        onDelete: undefined
+        onDelete: () => {}
     },
     {
         id: "3",
@@ -57,7 +57,7 @@ export const livros: BookCardProps[] = [
         cover: "https://i.pinimg.com/736x/a4/d7/b3/a4d7b39a93399884cffd3a9012c3349d.jpg",
         status: "LIDO",
         totalPaginasLidas: 500,
-        onDelete: undefined
+        onDelete: () => {}
     }, 
     {
         id: "4",
@@ -71,7 +71,7 @@ export const livros: BookCardProps[] = [
         cover: "https://i.pinimg.com/736x/a4/d7/b3/a4d7b39a93399884cffd3a9012c3349d.jpg",
         status: "LIDO",
         totalPaginasLidas: 500,
-        onDelete: undefined
+        onDelete: () => {}
     },
     {
         id: "5",
@@ -85,7 +85,7 @@ export const livros: BookCardProps[] = [
         cover: "https://i.pinimg.com/736x/a4/d7/b3/a4d7b39a93399884cffd3a9012c3349d.jpg",
         status: "LIDO",
         totalPaginasLidas: 500,
-        onDelete: undefined
+        onDelete: () => {}
     }
     
 ]

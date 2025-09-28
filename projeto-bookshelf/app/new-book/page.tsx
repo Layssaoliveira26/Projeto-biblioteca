@@ -13,23 +13,23 @@ import { BookCardProps } from '../library/bookCard';
 import { useLivros } from '@/context/LivrosContext';
 import { title } from 'process';
 
+type FormData = {
+  title: string;
+  author: string;
+  qtdPages: string;
+  actualPage: string;
+  isbn: string;
+  url: string;
+  genre: string;
+  status: string;
+  avaliation?: string;
+  notes: string;
+};
+
 export default function NewBookPage() {
-  const { register, handleSubmit, reset } = useForm()
+  const { register, handleSubmit, reset } = useForm<FormData>()
   const [numStars, setNumStars] = useState(0)
   const { addLivro, addId, idLivro } = useLivros();
-
-  type FormData = {
-    title: string;
-    author: string;
-    qtdPages: string;
-    actualPage: string;
-    isbn: string;
-    url: string;
-    genrer: string;
-    status: string;
-    avaliation?: string;
-    notes: string;
-  };
 
   function limparEstrelas() {
     setNumStars(0);
@@ -39,20 +39,22 @@ export default function NewBookPage() {
     setNumStars(numStars+1);
   }
 
-  async function onSubmit(userData: FormData): void {
+  async function onSubmit(userData: FormData): Promise<void> {
+    console.log(">>> userData recebido do form:", userData);
 
     const novoLivro:BookCardProps = {
-          id: String(idLivro),
+          id: "",
           title: userData.title,
           author: userData.author,
-          genre: userData.genrer,
-          year: Number(""),
+          genre: userData.genre,
+          year: new Date().getFullYear(),
           pages: Number(userData.qtdPages),
           rating: numStars,
           synopsis: userData.notes,
           cover: userData.url || "https://cdn-icons-png.flaticon.com/512/5999/5999928.png",
           status: userData.status,
-          totalPaginasLidas: Number(userData.actualPage)
+          totalPaginasLidas: Number(userData.actualPage),
+          onDelete: () => {}
       }
     
     try {
@@ -61,20 +63,23 @@ export default function NewBookPage() {
         headers: { 'Content-Type' : 'application/json' },
         body: JSON.stringify(novoLivro)
       })
+      console.log(res.ok)
 
       if(!res.ok) {
-        throw new Error("Erro ao cadastrar novo livro.");
-      }
+      const errorText = await res.text();
+      console.error("Conteúdo do erro:", errorText);
+      throw new Error(`Erro ${res.status}: ${errorText}`);
+    }
 
       const createdBook = await res.json();
       console.log("Livro cadastrado")
 
       addLivro(createdBook);
-      addId();
+      // addId();
       reset();
       setNumStars(0);
     } catch (error) {
-      
+      console.error(error)
     }
       
   }
@@ -130,7 +135,7 @@ export default function NewBookPage() {
         <div className='flex'>
           <div className='flex flex-col mt-2 w-1/2'>
             <label className='ml-5'>Gênero</label>
-            <select {...register("genrer")} name="" className='border border-gray-300 rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 '>
+            <select {...register("genre")}  required name="genre" className='border border-gray-300 rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 '>
               {options.map((optione, id) => (
                 <option key={id} value={optione.genero}>{optione.genero}</option>
               ))}
@@ -148,7 +153,7 @@ export default function NewBookPage() {
         <div className='mt-3 ml-5'>
             <label className='ml-1'>Avaliação</label>
             <div className='flex items-center'>
-              <div {...register("avaliation")} className='cursor-pointer' onClick={() => sumStars()}>
+              <div className='cursor-pointer' onClick={() => sumStars()}>
                 <StarRating  rating={numStars} />
               </div>
               <Button className='bg-[#fffff] text-gray-700 border text-xs ml-5' onClick={limparEstrelas}>
