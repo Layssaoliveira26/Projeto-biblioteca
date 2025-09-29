@@ -29,7 +29,7 @@ export const livros: BookCardProps[] = [
         cover: "https://images.gr-assets.com/books/1532168944l/40882855.jpg",
         status: "QUERO LER", 
         totalPaginasLidas: 500,
-        onDelete: undefined
+        onDelete: () => {}
     },
     {
         id: "2",
@@ -43,7 +43,8 @@ export const livros: BookCardProps[] = [
         cover: "https://images.gr-assets.com/books/1327170560l/21441.jpg",
         status: "ABANDONADO",
         totalPaginasLidas: 500,
-        onDelete: undefined
+        onDelete: () => {}
+
     },
     {
         id: "3",
@@ -57,7 +58,7 @@ export const livros: BookCardProps[] = [
         cover: "https://images.gr-assets.com/books/1367545443l/157993.jpg",
         status: "LIDO",
         totalPaginasLidas: 500,
-        onDelete: undefined
+        onDelete: () => {}
     }, 
     {
         id: "4",
@@ -71,7 +72,7 @@ export const livros: BookCardProps[] = [
         cover: "https://images.gr-assets.com/books/1327827871l/1885.jpg",
         status: "LIDO",
         totalPaginasLidas: 500,
-        onDelete: undefined
+        onDelete: () => {}
     },
     {
         id: "5",
@@ -85,7 +86,7 @@ export const livros: BookCardProps[] = [
         cover: "https://images.gr-assets.com/books/1420580584l/23692271.jpg",
         status: "LIDO",
         totalPaginasLidas: 500,
-        onDelete: undefined
+        onDelete: () => {}
     }
     
 ]
