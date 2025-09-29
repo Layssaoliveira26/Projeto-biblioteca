@@ -25,10 +25,7 @@ export default function ChangeTheme() {
     system: <PiMonitorLight className="w-5 h-5" />,
   };
 
-  if (!mounted) {
-    return null;
-  }
-
+ 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -37,7 +34,11 @@ export default function ChangeTheme() {
           size="sm"
           className="h-8 w-8 py-1 px-3 text-xs"
         >
-          {themeIcons[theme as "light" | "dark" | "system"]}
+          <span suppressHydrationWarning>
+            {mounted && theme
+              ? themeIcons[theme as "light" | "dark" | "system"]
+              : <PiSunLight className="w-5 h-5" />} 
+          </span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

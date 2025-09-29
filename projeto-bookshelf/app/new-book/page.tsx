@@ -95,24 +95,24 @@ export default function NewBookPage() {
   return (
     <div className="flex flex-col h-screen bg-[var(--background)] text-[var(--foreground)]">
       <div className='w-full bg-[var(--card)] p-1 md:p-8 lg:p-12'>
-        <div className="flex justify-between mt-6 px-3 md:px-12 items-center">
+        <div className="flex justify-between mt-6 px-3 md:px-8 items-center">
           <GoBackButton />
           <div className='mr-5'>
             <ChangeTheme />
           </div>
         </div>
 
-        <div className='flex justify-center items-center mt-6'>
+        <div className='flex justify-center items-center mb-2 md:mb-0 mt-6'>
           <div className={`text-center rounded-md flex justify-center items-center
             ${coverUrl 
               ? "bg-transparent p-0"
-              : "w-[128px] h-[176px] sm:w-[160px] sm:h-[224px] md:w-[192px] md:h-[272px] p-4 border-2 border-dashed border-[var(--border)]"}`}
+              : "w-[110px] h-[160px] sm:w-[128px] sm:h-[180px] md:w-[160px] md:h-[220px] p-4 border-2 border-dashed border-[var(--border)]"}`}
           >
             {coverUrl ? (
               <img
                 src={coverUrl}
                 alt="Preview da capa"
-                className="w-[120px] h-[176px] sm:w-[160px] sm:h-[224px] md:w-[192px] md:h-[272px] object-cover rounded-md"
+                className="w-[110px] h-[160px] sm:w-[128px] sm:h-[180px] md:w-[160px] md:h-[220px] object-cover rounded-md"
                 onError={(e) => (e.currentTarget.src = "https://cdn-icons-png.flaticon.com/512/5999/5999928.png")}
               />
             ) : (

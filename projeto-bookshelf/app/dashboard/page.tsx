@@ -14,7 +14,7 @@ export default function Home() {
   return (
   <div className="">
       {/* Header */}
-      <div className="overflow-auto flex flex-col md:flex-row md:items-center md:justify-between rounded-md py-2 shadow-md bg-[var(--card)] px-4 sm:px-6 md:px-12 lg:px-24 xl:px-16 2xl:px-16">
+      <div className="overflow-auto flex flex-row md:flex-row md:items-center md:justify-between rounded-md py-2 shadow-md bg-[var(--card)] px-4 sm:px-6 md:px-12 lg:px-24 xl:px-16 2xl:px-16">
         <div className="flex flex-row items-center justify-start w-full md:flex-row md:w-auto gap-3">
           <img 
             src="/logo.png" 
@@ -26,10 +26,10 @@ export default function Home() {
             alt="logo" 
             className="w-18 h-18 xl:w-20 xl:h-20 hidden dark:block" 
           />
-          <h1 className="font-bold font-sans mb-0 md:mb-1 text-2xl md:text-3xl xl:text-3xl">Dashboard</h1>
+          <h1 className="hidden md:block font-bold font-sans mb-0 md:mb-1 text-2xl md:text-3xl xl:text-3xl">Dashboard</h1>
         </div>
 
-        <div className="flex flex-row justify-start items-center md:gap-6 gap-3 mt-3 md:mt-0 ml-4">
+        <div className="flex flex-row items-center gap-3 md:gap-6 ml-auto">
           {/* Modo escuro, claro e sistema */}
           <ChangeTheme />
           <Link href="/library">
@@ -128,10 +128,14 @@ export default function Home() {
             Quantos livros você já leu? Quantas páginas você virou? 
             Descubra estatísticas sobre seus hábitos de leitura e organize sua jornada literária.
           </p>
+          
         </div>
       </div>
 
       {/* Cards */}
+      <h1 className="font-bold flex font-sans mt-10 ml-8 text-2xl md:hidden">
+        Dashboard
+      </h1>
       <div className="content-center justify-center w-full grid grid-cols-2 gap-4 p-4 md:mt-10 md:grid md:grid-cols-4 md:gap-4 md:p-4 max-w-6xl mx-auto 2xl:mt-30">
         <ReportCard title={"Total de livros"} value={livros.length} image="https://i.pinimg.com/1200x/d6/33/f0/d633f0f54435a0d174a73e593d03acb4.jpg" />
         <ReportCard title={"Lendo agora"} value={(livros.filter((livro) => livro.genre === "Aventura").length)} image="https://i.pinimg.com/736x/07/2e/8d/072e8d9e2dd30564a030bbe6437e744a.jpg" />

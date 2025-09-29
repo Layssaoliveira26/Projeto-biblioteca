@@ -7,12 +7,12 @@ import { BookCardProps } from "@/app/library/bookCard";
 export default function DadoLivro({ livro }: { livro: BookCardProps }) {
 
     return (
-        <main className="flex flex-col flex-1 items-center">
+        <main className="flex flex-col h-full w-full items-center">
             <div className="p-4">
                 <img
                     src={ livro.cover }
                     alt="Capa do livro"
-                    className="w-[120px] h-[176px] sm:w-[160px] sm:h-[224px] md:w-[192px] md:h-[272px] object-cover rounded-md"
+                    className="w-[110px] h-[160px] sm:w-[128px] sm:h-[180px] md:w-[160px] md:h-[220px] object-cover rounded-md"
                 />
             </div>
             <div className="w-full flex-1 flex flex-col p-4 bg-[var(--background)] text-[var(--foreground)]">

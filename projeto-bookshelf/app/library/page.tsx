@@ -71,7 +71,7 @@ export default function LibraryPage() {
       </div>
       
   <div className="flex md:flex-row items-start md:items-center justify-between gap-3 p-4 md:p-8 lg:p-12">
-    <div className="relative flex-1">
+    <div className="relative w-full flex-1">
       <Input
        type="text"
        placeholder="Digite o nome do livro"
@@ -89,7 +89,7 @@ export default function LibraryPage() {
           value={selectedGenre}
           onValueChange={(value) => setSelectedGenre(value)}
         >
-          <SelectTrigger className="w-[180px] border border-[var(--border)] ">
+          <SelectTrigger className=" md:w-[180px] border border-[var(--border)]">
             <SelectValue placeholder="Gêneros" />
           </SelectTrigger>
           <SelectContent>
@@ -106,7 +106,7 @@ export default function LibraryPage() {
         </Select>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {livrosFiltrados.length > 0 ? (
           livrosFiltrados.map((livro, index) => (
             <BookCard
