@@ -107,11 +107,15 @@ export default function NewBookPage() {
       <form onSubmit={handleSubmit(onSubmit)} className='m-4'>
         <h5 className='text-center mb-2 font-bold'>Informações da Obra</h5>
         <div className='flex flex-col'>
-          <label className='ml-5'>Título</label>
+          <label className='ml-5'>
+      Título <span style={{ color: 'red' }}>*</span>
+    </label>
           <input {...register("title")} type="text" placeholder='Ex.: Dom Casmurro' className='border border-gray-300 rounded rouded-sm h-8 ml-5 mr-5 pl-1.5' required/>
         </div>
         <div className='flex flex-col mt-2'>
-          <label className='ml-5'>Autor</label>
+          <label className='ml-5'>
+      Autor <span style={{ color: 'red' }}>*</span>
+    </label>
           <input {...register("author")} type="text" placeholder='Ex.: Machado de Assis' className='border border-gray-300 rounded rouded-sm h-8 ml-5 mr-5 pl-1.5' required/>
         </div>
         <div className='flex'>
