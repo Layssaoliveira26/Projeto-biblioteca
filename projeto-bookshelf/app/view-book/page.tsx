@@ -5,26 +5,64 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge"
 import { StarRating } from "@/components/ui/custom-components/star";
-import { livros } from "@/lib/livros";
 import DadoLivro from "@/components/ui/verLivro";
 import { BookCardProps } from "../library/bookCard";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useLivros } from "@/context/LivrosContext";
+import { useEffect, useState } from "react";
+import { Divide } from "lucide-react";
 
 
 export default function ViewBookPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const id = searchParams.get("id");
-  const { livros, setLivros } = useLivros();
+  
+  const [livro, setLivro] = useState<BookCardProps | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  function handleDelete() {
+  useEffect(() => {
+    async function fetchLivro() {
+      if (!id) return;
+
+      try {
+        const res = await fetch(`/api/books/${id}`, { method: "GET"})
+
+        if (!res.ok) {
+          const data = await res.json();
+          setError(data.message || "Livro não encontrado.");
+          return;
+        }
+
+        const data = await res.json();
+        setLivro(data);
+      } catch (error) {
+        setError("Erro de conexão.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchLivro();
+  }, [id])
+
+  async function handleDelete() {
     if (!id) return;
     const confirmDelete = window.confirm("Tem certeza que deseja excluir este livro?");
-    if (confirmDelete) {
-      const filtro = livros.filter((livro) => livro.id !== id);
-      setLivros(filtro);
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(`/api/books/${id}`, { method: "DELETE" });
+      if (!res.ok) {
+        const data = await res.json();
+        alert(data.message || "Erro ao deletar livro.");
+        return;
+      }
+
       router.push("/library");
+      router.refresh();
+    } catch (error) {
+      alert("Erro de conexão");
     }
   }
 
@@ -46,11 +84,11 @@ export default function ViewBookPage() {
         </div>
       </div>
 
-      {id ? (
-        <DadoLivro id={id} />
-      ) : (
-        <div className="p-8 text-gray-500">Livro não encontrado</div>
-      )}
+      <div className="flex-1 p-8">
+        {loading && <div>Carregando...</div>}
+        {error && <div className="text-red-500">{error}</div>}
+        {!loading && !error && livro && <DadoLivro livro={livro}/>}
+      </div>
     </div>
   );
 }
