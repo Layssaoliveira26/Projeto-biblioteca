@@ -12,19 +12,8 @@ import { useState } from 'react';
 import { BookCardProps } from '../library/bookCard';
 import { useLivros } from '@/context/LivrosContext';
 import { title } from 'process';
+import { FormData } from '../types/books';
 
-type FormData = {
-  title: string;
-  author: string;
-  qtdPages: string;
-  actualPage: string;
-  isbn: string;
-  url: string;
-  genre: string;
-  status: string;
-  avaliation?: string;
-  notes: string;
-};
 
 export default function NewBookPage() {
   const { register, handleSubmit, reset } = useForm<FormData>()

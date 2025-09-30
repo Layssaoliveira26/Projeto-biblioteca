@@ -71,7 +71,7 @@ export default function ViewBookPage() {
       <div className="flex md:flex-row items-start md:items-center justify-between gap-3 p-4 md:p-8 lg:p-12">
         <GoBackButton />
         <div className="flex gap-2 md:gap-4"> {}
-          <Link href={`/new-book?id=${id}`}> {}
+          <Link href={`/edit-book?id=${id}`}> {}
             <Button size="sm">Editar Livro</Button>
           </Link>
           <Button 

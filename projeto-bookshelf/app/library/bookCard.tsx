@@ -53,9 +53,11 @@ export default function BookCard({ title, author, genre, year, cover, rating, id
           <LuEye />
           Ver</Button>
         </Link>
-        <Button size="sm">
-        <CiEdit />
-        Editar</Button>
+        <Link href={`/edit-book?id=${id}`}>
+          <Button size="sm">
+          <CiEdit />
+          Editar</Button>
+        </Link>
         <Button size="sm" variant="destructive" onClick={() => {
           console.log("Exluir", id)
           onDelete(id)
