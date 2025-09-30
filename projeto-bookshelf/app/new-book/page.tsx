@@ -127,7 +127,7 @@ export default function NewBookPage() {
         <h5 className='text-center mb-2 font-bold'>Informações da Obra</h5>
 
         <div className='flex flex-col'>
-          <label className='ml-5'>Título</label>
+          <label className='ml-5'>Título <span style={{ color: 'red' }}>*</span> </label>
           <input {...register("title", { required: "Título é obrigatório"})} type="text" placeholder='Ex.: Dom Casmurro' className='border rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 border-[var(--border)]'/>
           {errors.title && (
             <span className="text-red-500 text-xs ml-5 mt-1 transition-opacity duration-500">{errors.title.message}</span>
@@ -135,7 +135,7 @@ export default function NewBookPage() {
         </div>
 
         <div className='flex flex-col mt-2'>
-          <label className='ml-5'>Autor</label>
+          <label className='ml-5'>Autor <span style={{ color: 'red' }}>*</span> </label>
           <input {...register("author", { required: "Autor é obrigatório" })} type="text" placeholder='Ex.: Machado de Assis' className='border rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 border-[var(--border)]'/>
           {errors.author && (
             <span className="text-red-500 text-xs ml-5 mt-1">{errors.author.message}</span>
