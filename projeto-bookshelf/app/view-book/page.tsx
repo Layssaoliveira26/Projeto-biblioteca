@@ -7,9 +7,12 @@ import { Badge } from "@/components/ui/badge"
 import { StarRating } from "@/components/ui/custom-components/star";
 import DadoLivro from "@/components/ui/verLivro";
 import { BookCardProps } from "../library/bookCard";
+import ChangeTheme from "../dashboard/changeTheme";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Divide } from "lucide-react";
+import { CiTrash } from "react-icons/ci";
+import { CiEdit } from "react-icons/ci";
 
 
 export default function ViewBookPage() {
@@ -67,10 +70,12 @@ export default function ViewBookPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen bg-[var(--card)] text-[var(--foreground)]">
+      
       <div className="flex md:flex-row items-start md:items-center justify-between gap-3 p-4 md:p-8 lg:p-12">
         <GoBackButton />
         <div className="flex gap-2 md:gap-4"> {}
+          <ChangeTheme />
           <Link href={`/edit-book?id=${id}`}> {}
             <Button size="sm">Editar Livro</Button>
           </Link>
@@ -79,16 +84,17 @@ export default function ViewBookPage() {
             variant="destructive" 
             onClick={handleDelete}
           >
-            Excluir Livro
+           <CiTrash />
           </Button>
         </div>
       </div>
 
-      <div className="flex-1 p-8">
+      <div className="flex-1">
         {loading && <div>Carregando...</div>}
         {error && <div className="text-red-500">{error}</div>}
-        {!loading && !error && livro && <DadoLivro livro={livro}/>}
+        {!loading && !error && livro && <DadoLivro livro={livro} />}
       </div>
+    
     </div>
   );
 }

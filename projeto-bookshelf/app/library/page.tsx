@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import BookCard, { BookCardProps } from "./bookCard";
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import ChangeTheme from "../dashboard/changeTheme";
 import { useEffect, useState } from "react";
 import { Search } from "lucide-react";  
 
@@ -59,21 +60,24 @@ export default function LibraryPage() {
         <GoBackButton />
       </div>
 
-      <div className="flex justify-between mt-6 px-5 md:px-12">
-        <h1 className="text-2xl font-bold mb-4">Biblioteca</h1>
-        <Link href="/new-book">
-          <Button size="sm">Adicionar Livro</Button>
-        </Link>
+      <div className="flex justify-between mt-6 px-5 md:px-12 items-center">
+        <h1 className="text-2xl font-bold ">Biblioteca</h1>
+        <div className="flex items-center gap-4">
+          <ChangeTheme />
+          <Link href="/new-book">
+            <Button size="sm">Adicionar Livro</Button>
+          </Link>
+        </div>
       </div>
       
   <div className="flex md:flex-row items-start md:items-center justify-between gap-3 p-4 md:p-8 lg:p-12">
-    <div className="relative flex-1">
+    <div className="relative w-full flex-1">
       <Input
        type="text"
        placeholder="Digite o nome do livro"
        value={searchTerm}
        onChange={(e) => setSearchTerm(e.target.value)} 
-       className="pr-10"
+       className="pr-10 border border-[var(--border)] focus:border-[var(--border)] focus:ring-1 focus:ring-[var(--ring)]"
     />
     <Search 
       className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" 
@@ -85,7 +89,7 @@ export default function LibraryPage() {
           value={selectedGenre}
           onValueChange={(value) => setSelectedGenre(value)}
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className=" md:w-[180px] border border-[var(--border)]">
             <SelectValue placeholder="Gêneros" />
           </SelectTrigger>
           <SelectContent>
@@ -106,7 +110,7 @@ export default function LibraryPage() {
         {livrosFiltrados.length > 0 ? (
           livrosFiltrados.map((livro, index) => (
             <BookCard
-              key={livro.id ?? index}
+              key={index}
               id={livro.id}
               title={livro.title}
               author={livro.author}

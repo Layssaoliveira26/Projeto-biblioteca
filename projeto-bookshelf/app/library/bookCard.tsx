@@ -47,11 +47,11 @@ export default function BookCard({ title, author, genre, year, cover, rating, id
         <Badge variant="outline" className="mt-3">{genre}</Badge>
         <Badge variant="outline" className="mt-3">{year}</Badge>   
       </CardContent>
-      <CardFooter className="flex justify-center gap-2">
+      <CardFooter className="flex justify-center gap-5">
         <Link href={`/view-book?id=${id}`}>
           <Button size="sm">
           <LuEye />
-          Ver</Button>
+          </Button>
         </Link>
         <Link href={`/edit-book?id=${id}`}>
           <Button size="sm">
@@ -63,7 +63,7 @@ export default function BookCard({ title, author, genre, year, cover, rating, id
           onDelete(id)
         }}>
         <CiTrash />
-        Excluir</Button>
+        </Button>
       </CardFooter>
     </Card>
   </div>
