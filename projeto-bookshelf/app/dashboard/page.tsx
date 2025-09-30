@@ -15,7 +15,7 @@ export default function Home() {
   <div className="">
       {/* Header */}
       <div className="overflow-auto flex flex-row md:flex-row md:items-center md:justify-between rounded-md py-2 shadow-md bg-[var(--card)] px-4 sm:px-6 md:px-12 lg:px-24 xl:px-16 2xl:px-16">
-        <div className="flex flex-row items-center justify-start w-full md:flex-row md:w-auto gap-3">
+        <div className="flex flex-row items-center justify-start w-full md:flex-row md:w-auto gap-3 ml-2 lg:ml-4 2xl:ml-20">
           <img 
             src="/logo.png" 
             alt="logo" 
@@ -29,7 +29,7 @@ export default function Home() {
           <h1 className="hidden md:block font-bold font-sans mb-0 md:mb-1 text-2xl md:text-3xl xl:text-3xl">Dashboard</h1>
         </div>
 
-        <div className="flex flex-row items-center gap-3 md:gap-6 ml-auto">
+        <div className="flex flex-row items-center gap-3 md:gap-6 ml-auto mr-3 lg:mr-4 2xl:mr-20">
           {/* Modo escuro, claro e sistema */}
           <ChangeTheme />
           <Link href="/library">
@@ -45,7 +45,7 @@ export default function Home() {
       {/* Seção principal */}
       {/* Mobile: row (texto à esquerda + 1 imagem à direita)
           Desktop: row-reverse (texto esquerda + imagens direita) */}
-      <div className="flex flex-row-reverse lg:flex-row-reverse items-center justify-center mt-10 md:mt-16 mb-5 px-6 sm:px-10 md:px-12 lg:px-20 gap-6 md:gap-12 lg:gap-20 xl:gap-32 2xl:gap-80">
+      <div className="flex flex-row-reverse lg:flex-row-reverse items-center justify-center mt-10 md:mt-16 mb-5 px-6 sm:px-10 md:px-12 lg:px-20 gap-6 md:gap-12 lg:gap-20 xl:gap-47 2xl:gap-80 mr-3 lg:mr-24 2xl:mr-40">
         
         {/* Imagens */}
         <div className="flex w-1/2 justify-center md:justify-end 2xl:mr-30">
@@ -59,7 +59,7 @@ export default function Home() {
           </div>
 
           {/* Imagens completas no desktop */}
-          <div className="hidden md:flex flex-row gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 justify-center">
+          <div className="hidden md:flex flex-row gap-4 sm:gap-4 md:gap-8 lg:gap-6 xl:gap-10 justify-center">
             <div className="hidden lg:flex flex-col w-1/3 justify-center content-center text-center">
               <div className="livros-area flex flex-col w-32 h-48 md:w-45 md:h-60 2xl:w-60 2xl:h-80" id="livros-area">
                 <img
@@ -80,7 +80,7 @@ export default function Home() {
               </div>
             </div> 
 
-            <div className="flex flex-col items-center text-center w-1/2">
+            <div className="flex flex-col items-center text-center w-1/2 ">
               <div className="flex flex-col">
                 <p className="livros-area text-sm md:text-sm lg:text-sm max-[768px]:text-[10px] text-center font-bold mt-2">
                   The Herbwitch's Apprentice
@@ -123,7 +123,7 @@ export default function Home() {
         </div>
         
         {/* Sessao esquerda do título e parágrafo */}
-        <div className="flex flex-col justify-center items-start text-left w-1/2 ml-3 lg:ml-24 2xl:ml-40">
+        <div className="flex flex-col justify-center items-start text-left w-1/2 ml-2 lg:ml-20 2xl:ml-70">
           <h1 className="text-[32px] sm:text-[42px] md:text-[65px] font-bold leading-none 2xl:text-[75px]">
             Ressonância
           </h1>
@@ -142,7 +142,7 @@ export default function Home() {
       <h1 className="font-bold flex font-sans mt-10 ml-8 text-2xl md:hidden">
         Dashboard
       </h1>
-      <div className="content-center justify-center w-full grid grid-cols-2 gap-4 p-4 md:mt-10 md:grid md:grid-cols-4 md:gap-4 md:p-4 max-w-6xl mx-auto 2xl:mt-30">
+      <div className="w-full grid grid-cols-2 gap-4 p-4 md:mt-10 md:grid md:grid-cols-4 md:gap-4 md:p-4 max-w-6xl 2xl:mt-30 mx-auto">
         <ReportCard title={"Total de livros"} value={livros.length} image="https://i.pinimg.com/1200x/d6/33/f0/d633f0f54435a0d174a73e593d03acb4.jpg" />
         <ReportCard title={"Lendo agora"} value={(livros.filter((livro) => livro.genre === "Aventura").length)} image="https://i.pinimg.com/736x/07/2e/8d/072e8d9e2dd30564a030bbe6437e744a.jpg" />
         <ReportCard title={"Livros lidos"} value={(livros.filter((livro) => livro.status === "LIDO")).length} image="https://i.pinimg.com/736x/29/45/22/294522b8d609cb12c82028e85fb2a1fe.jpg"/>

@@ -110,7 +110,7 @@ export default function LibraryPage() {
         {livrosFiltrados.length > 0 ? (
           livrosFiltrados.map((livro, index) => (
             <BookCard
-              key={livro.id ?? index}
+              key={index}
               id={livro.id}
               title={livro.title}
               author={livro.author}

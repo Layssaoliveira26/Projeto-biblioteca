@@ -83,8 +83,8 @@ export default function ViewBookPage() {
         <GoBackButton />
         <div className="flex gap-2 md:gap-4"> {}
           <ChangeTheme />
-          <Link href={`/new-book?id=${id}`}> {}
-            <Button size="sm"> <CiEdit /> </Button>
+          <Link href={`/edit-book?id=${id}`}> {}
+            <Button size="sm">Editar Livro</Button>
           </Link>
           <Button 
             size="sm" 
