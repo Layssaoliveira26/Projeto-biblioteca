@@ -65,7 +65,9 @@ export default function Home() {
                 <img
                   src="https://i.pinimg.com/1200x/9d/82/d6/9d82d654e41a805c10ac4e2a6a772ce9.jpg"
                   alt=""
-                  className="rounded-t-[150px] rounded-b-[10px] object-cover w-full h-full shadow-md border-3 border-[#D99D55]"
+                  className="rounded-t-[150px] rounded-b-[10px] object-cover w-full h-full shadow-md border-3 border-[#D99D55]
+                            transform transition-transform duration-300 
+                            hover:-translate-y-2 hover:scale-105"
                 />
               </div>
               <div className="flex flex-col">
@@ -91,7 +93,9 @@ export default function Home() {
                 <img
                   src="https://i.pinimg.com/736x/01/83/76/018376580e76d06eac2f260ad42d5d7e.jpg"
                   alt=""
-                  className="rounded-t-[10px] rounded-b-[150px] object-cover w-full h-full shadow-md border-3 border-[#F3CEA0]"
+                  className="rounded-t-[10px] rounded-b-[150px] object-cover w-full h-full shadow-md border-3 border-[#F3CEA0]
+                            transform transition-transform duration-300 
+                            hover:-translate-y-2 hover:scale-105"
                 />
               </div>
             </div>
@@ -101,7 +105,9 @@ export default function Home() {
                 <img
                   src="https://i.pinimg.com/736x/24/3e/41/243e4165742e6e75744d85e16bb63a77.jpg"
                   alt=""
-                  className="rounded-t-[150px] rounded-b-[10px] object-cover w-full h-full shadow-md border-3 border-[#D9C6B0]"
+                  className="rounded-t-[150px] rounded-b-[10px] object-cover w-full h-full shadow-md border-3 border-[#D9C6B0]
+                            transform transition-transform duration-300 
+                            hover:-translate-y-2 hover:scale-105"
                 />
               </div>
               <div className="flex flex-col">

@@ -8,7 +8,9 @@ interface ReportCardProps{
 
 export default function ReportCard({ title, value, image }: ReportCardProps) {
   return (
-    <Card className="overflow-hidden w-40 h-28 md:w-60 flex flex-row p-0 gap-2  ">
+    <Card className="overflow-hidden w-40 h-28 md:w-60 flex flex-row p-0 gap-2 
+                    transform transition-transform duration-300 
+                    hover:-translate-y-2 hover:scale-105 shadow-md hover:shadow-xl ">
       <div className="w-2/5 h-full ">
         <img
           src={image}

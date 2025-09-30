@@ -15,6 +15,7 @@ import { CiTrash } from "react-icons/ci";
 import { CiEdit } from "react-icons/ci";
 
 
+
 export default function ViewBookPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -27,6 +28,7 @@ export default function ViewBookPage() {
   useEffect(() => {
     async function fetchLivro() {
       if (!id) return;
+      
 
       try {
         const res = await fetch(`/api/books/${id}`, { method: "GET"})
@@ -44,10 +46,13 @@ export default function ViewBookPage() {
       } finally {
         setLoading(false);
       }
+      
     }
 
     fetchLivro();
   }, [id])
+
+  
 
   async function handleDelete() {
     if (!id) return;
@@ -60,6 +65,7 @@ export default function ViewBookPage() {
         const data = await res.json();
         alert(data.message || "Erro ao deletar livro.");
         return;
+        
       }
 
       router.push("/library");
@@ -67,6 +73,7 @@ export default function ViewBookPage() {
     } catch (error) {
       alert("Erro de conexão");
     }
+    
   }
 
   return (
