@@ -14,7 +14,7 @@ export default function Home() {
   return (
   <div className="">
       {/* Header */}
-      <div className="overflow-auto flex flex-row md:flex-row md:items-center md:justify-between rounded-md py-2 shadow-md bg-[var(--card)] px-4 sm:px-6 md:px-12 lg:px-24 xl:px-16 2xl:px-16">
+      <div className="overflow-auto flex flex-row md:flex-row md:items-center md:justify-between rounded-md py-2 shadow-md bg-[var(--card)] px-4 sm:px-5 md:px-6 lg:px-8 xl:px-10 2xl:px-2">
         <div className="flex flex-row items-center justify-start w-full md:flex-row md:w-auto gap-3 ml-2 lg:ml-4 2xl:ml-20">
           <img 
             src="/logo.png" 

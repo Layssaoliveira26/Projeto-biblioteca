@@ -84,7 +84,9 @@ export default function ViewBookPage() {
         <div className="flex gap-2 md:gap-4"> {}
           <ChangeTheme />
           <Link href={`/edit-book?id=${id}`}> {}
-            <Button size="sm">Editar Livro</Button>
+            <Button size="sm">
+            <CiEdit />
+            Editar Livro</Button>
           </Link>
           <Button 
             size="sm" 

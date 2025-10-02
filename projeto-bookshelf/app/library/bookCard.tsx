@@ -44,13 +44,14 @@ export default function BookCard({ title, author, genre, year, cover, rating, id
       </CardHeader>
       <CardContent>
         <p className="-mt-4">{author}</p>
-        <Badge variant="outline" className="mt-3">{genre}</Badge>
+        <Badge variant="outline" className="mt-3 mr-2">{genre}</Badge>
         <Badge variant="outline" className="mt-3">{year}</Badge>   
       </CardContent>
       <CardFooter className="flex justify-center gap-5">
         <Link href={`/view-book?id=${id}`}>
           <Button size="sm">
           <LuEye />
+          Ver
           </Button>
         </Link>
         <Link href={`/edit-book?id=${id}`}>

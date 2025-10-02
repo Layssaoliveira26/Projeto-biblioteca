@@ -13,11 +13,17 @@ import { useLivros } from '@/context/LivrosContext';
 import { title } from 'process';
 import { FormData } from '../types/books';
 import ChangeTheme from "../dashboard/changeTheme";
-
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 
 
 export default function NewBookPage() {
-  const { register, handleSubmit, reset, formState: { errors }, watch } = useForm<FormData>()
+  const { register, handleSubmit, reset, formState: { errors }, watch, setValue } = useForm<FormData>()
   const titleValue = watch("title");
   const authorValue = watch("author");
   const [numStars, setNumStars] = useState(0)
@@ -86,7 +92,7 @@ export default function NewBookPage() {
   return (
     <div className="flex flex-col h-screen bg-[var(--background)] text-[var(--foreground)]">
       <div className='w-full bg-[var(--card)] p-1 md:p-8 lg:p-12'>
-        <div className="flex justify-between mt-6 px-3 md:px-8 items-center">
+        <div className="flex justify-between mt-6 px-3 md:mt-0 md:px-0 items-center">
           <GoBackButton />
           <div className='mr-5'>
             <ChangeTheme />
@@ -128,15 +134,30 @@ export default function NewBookPage() {
 
         <div className='flex flex-col'>
           <label className='ml-5'>Título <span style={{ color: 'red' }}>*</span> </label>
-          <input {...register("title", { required: "Título é obrigatório"})} type="text" placeholder='Ex.: Dom Casmurro' className='border rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 border-[var(--border)]'/>
+          <input 
+            {...register("title")} 
+            type="text" 
+            placeholder='Ex.: Dom Casmurro' 
+            required 
+            className='border rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 border-[var(--border)]'
+          />
           {errors.title && (
-            <span className="text-red-500 text-xs ml-5 mt-1 transition-opacity duration-500">{errors.title.message}</span>
+            <span className="text-red-500 text-xs ml-5 mt-1 transition-opacity duration-500">
+              {errors.title.message}
+            </span>
           )}
         </div>
 
+
         <div className='flex flex-col mt-2'>
           <label className='ml-5'>Autor <span style={{ color: 'red' }}>*</span> </label>
-          <input {...register("author", { required: "Autor é obrigatório" })} type="text" placeholder='Ex.: Machado de Assis' className='border rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 border-[var(--border)]'/>
+          <input 
+            {...register("author")} 
+            type="text" 
+            placeholder='Ex.: Machado de Assis' 
+            required 
+            className='border rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 border-[var(--border)]'
+          />
           {errors.author && (
             <span className="text-red-500 text-xs ml-5 mt-1">{errors.author.message}</span>
           )}
@@ -168,19 +189,39 @@ export default function NewBookPage() {
         <div className='flex'>
           <div className='flex flex-col mt-2 w-1/2'>
             <label className='ml-5'>Gênero</label>
-            <select {...register("genre")} required name="genre" className='border border-[var(--border)] rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 '>
-              {options.map((optione, id) => (
-                <option key={id} value={optione.genero}>{optione.genero}</option>
-              ))}
-            </select>
-          </div>
-          <div className='flex flex-col mt-2'>
-            <label className='ml-1'>Status</label>
-            <select {...register("status")} name="" className='border rounded rouded-sm h-8 mr-5 pl-1.5 w-full border-[var(--border)]'>
-              {opcoesLeitura.map((opcaoLeitura, id) => (
-                <option key={id} value={opcaoLeitura.status}>{opcaoLeitura.status}</option>
-              ))}
-            </select>
+            <Select
+                onValueChange={(value) => setValue("genre", value)}
+                defaultValue={watch("genre")}
+              >
+                <SelectTrigger className='border border-[var(--border)] rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 w-36 sm:w-44'>
+                  <SelectValue placeholder="Selecione o gênero" />
+                </SelectTrigger>
+                <SelectContent>
+                  {options.map((optione, id) => (
+                    <SelectItem key={id} value={optione.genero}>
+                      {optione.genero}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className='flex flex-col mt-2'>
+              <label className='ml-1'>Status</label>
+              <Select
+                onValueChange={(value) => setValue("status", value)}
+                defaultValue={watch("status")}
+              >
+                <SelectTrigger className='border border-[var(--border)] rounded rouded-sm h-8 mr-5 pl-1.5 w-36 sm:w-44'>
+                  <SelectValue placeholder="Selecione o status" />
+                </SelectTrigger>
+                <SelectContent>
+                  {opcoesLeitura.map((opcaoLeitura, id) => (
+                    <SelectItem key={id} value={opcaoLeitura.status}>
+                      {opcaoLeitura.status}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+            </Select>
           </div>
         </div>
 
