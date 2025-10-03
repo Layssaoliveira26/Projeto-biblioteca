@@ -26,19 +26,63 @@ export default function NewBookPage() {
   const { register, handleSubmit, reset, formState: { errors }, watch, setValue } = useForm<FormData>()
   const titleValue = watch("title");
   const authorValue = watch("author");
+  const qtdPagesValue = watch("qtdPages");
+  const actualPageValue = watch("actualPage");
+  const isbnValue = watch("isbn");
+  const urlValue = watch("url");
+  const genreValue = watch("genre");
+  const statusValue = watch("status");
+  const notesValue = watch("notes");
   const [numStars, setNumStars] = useState(0)
   const { addLivro, idLivro } = useLivros();
   const [coverUrl, setCoverUrl] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState("");
   const [progress, setProgress] = useState(0);
+  const [customGenre, setCustomGenre] = useState("");
+  const [isCustomGenre, setIsCustomGenre] = useState(false);
 
   useEffect(() => {
+    const fields = [
+      titleValue,
+      authorValue,
+      qtdPagesValue,
+      actualPageValue,
+      isbnValue,
+      urlValue,
+      genreValue,
+      statusValue,
+      notesValue,
+    ];
+  
+    const filled = fields.filter((f) => {
+      if (typeof f === "string") {
+        return f.trim() !== "";
+      }
+      return f !== undefined && f !== null;
+    }).length;
+    const total = fields.length;
+    const newProgress = Math.min((filled / total) * 100, 100);
+  
+    setProgress(newProgress);
+  }, [
+    titleValue,
+    authorValue,
+    qtdPagesValue,
+    actualPageValue,
+    isbnValue,
+    urlValue,
+    genreValue,
+    statusValue,
+    notesValue,
+  ]);
+
+  /*useEffect(() => { usado anteriormente para progresso apenas com obrigatorios
     let filled = 0;
     if (titleValue) filled += 1;
     if (authorValue) filled += 1;
     const newProgress = (filled / 2) * 100;
     setProgress(newProgress);
-  }, [titleValue, authorValue]);
+  }, [titleValue, authorValue]);*/
 
   function limparEstrelas() {
     setNumStars(0);
@@ -190,20 +234,43 @@ export default function NewBookPage() {
           <div className='flex flex-col mt-2 w-1/2'>
             <label className='ml-5'>Gênero</label>
             <Select
-                onValueChange={(value) => setValue("genre", value)}
-                defaultValue={watch("genre")}
-              >
-                <SelectTrigger className='border border-[var(--border)] rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 w-36 sm:w-44'>
-                  <SelectValue placeholder="Selecione o gênero" />
-                </SelectTrigger>
-                <SelectContent>
-                  {options.map((optione, id) => (
-                    <SelectItem key={id} value={optione.genero}>
-                      {optione.genero}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              onValueChange={(value) => {
+                if (value === "Outro") {
+                  setIsCustomGenre(true);
+                  setValue("genre", "");
+                } else {
+                  setIsCustomGenre(false);
+                  setValue("genre", value); 
+                }
+              }}
+              defaultValue={watch("genre")}
+            >
+              <SelectTrigger className='border border-[var(--border)] rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 w-36 sm:w-44'>
+                <SelectValue placeholder="Selecione o gênero" />
+              </SelectTrigger>
+              <SelectContent>
+                {options.map((optione, id) => (
+                  <SelectItem key={id} value={optione.genero}>
+                    {optione.genero}
+                  </SelectItem>
+                ))}
+                <SelectItem value="Outro">Outro</SelectItem> {}
+              </SelectContent>
+            </Select>
+            {isCustomGenre && (
+            <input
+              type="text"
+              placeholder="Digite o novo gênero"
+              value={customGenre}
+              onChange={(e) => {
+                setCustomGenre(e.target.value);
+                setValue("genre", e.target.value);
+              }}
+              className="border rounded-sm h-8 ml-5 mr-5 pl-1.5 border-[var(--border)] mt-2"
+            />
+          )}
+
+
             </div>
             <div className='flex flex-col mt-2'>
               <label className='ml-1'>Status</label>

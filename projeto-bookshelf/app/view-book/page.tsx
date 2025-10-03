@@ -13,7 +13,17 @@ import { useEffect, useState } from "react";
 import { Divide } from "lucide-react";
 import { CiTrash } from "react-icons/ci";
 import { CiEdit } from "react-icons/ci";
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 
 export default function ViewBookPage() {
@@ -56,8 +66,6 @@ export default function ViewBookPage() {
 
   async function handleDelete() {
     if (!id) return;
-    const confirmDelete = window.confirm("Tem certeza que deseja excluir este livro?");
-    if (!confirmDelete) return;
 
     try {
       const res = await fetch(`/api/books/${id}`, { method: "DELETE" });
@@ -88,13 +96,33 @@ export default function ViewBookPage() {
             <CiEdit />
             Editar Livro</Button>
           </Link>
-          <Button 
-            size="sm" 
-            variant="destructive" 
-            onClick={handleDelete}
-          >
-           <CiTrash />
-          </Button>
+          {}
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button size="sm" variant="destructive">
+                <CiTrash />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Confirmar Exclusão</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Tem certeza que deseja excluir este livro?
+                  <br />
+                  Esta ação não pode ser desfeita.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleDelete}
+                  className="bg-red-600 hover:bg-red-700"
+                >
+                  Excluir Livro
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
 
