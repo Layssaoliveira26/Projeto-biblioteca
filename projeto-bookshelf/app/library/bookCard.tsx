@@ -39,7 +39,6 @@ async function handleDelete() {
   setOpen(false);
 }
 
-
   return (
     <div className="flex justify-center">
     <Card className="w-64">
