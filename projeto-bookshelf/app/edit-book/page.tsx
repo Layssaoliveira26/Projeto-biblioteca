@@ -13,18 +13,21 @@ import { BookCardProps } from '../library/bookCard';
 import { useLivros } from '@/context/LivrosContext';
 import { title } from 'process';
 import { FormData } from '../types/books';
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
+import { redirect, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 
 export default function EditBookPage() {
+  const router = useRouter()
+  const [successMessage, setSuccessMessage] = useState("");
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const { register, handleSubmit, reset } = useForm<FormData>()
   const [dadosLivro, setDadosLivro] = useState<BookCardProps | null>(null);
   const [numStars, setNumStars] = useState(0)
-  const { addLivro, addId, idLivro } = useLivros();
+
   const [error, setError] = useState("");
+  const [categorias, setCategorias] = useState<any>([])
 
   useEffect(() => {
     if (!id) return;
@@ -40,27 +43,35 @@ export default function EditBookPage() {
 
             const data = await res.json();
             setDadosLivro(data);
-            
-            reset({
-                title: data.title,
-                author: data.author,
-                qtdPages: data.pages,
-                actualPage: data.totalPaginasLidas,
-                isbn: data.isbn,
-                url: data.cover,
-                genre: data.genre,
-                status: data.status,
-                notes: data.synopsis,
-                avaliation: data.rating
+            setNumStars(data.rating || 0)
 
-            })
+            reset({
+              title: data.title,
+              author: data.author,
+              qtdPages: data.pages,
+              actualPage: data.totalPaginasLidas,
+              isbn: data.isbn,
+              url: data.cover,
+              genreId: data.genreId?.toString() || data.genre?.id?.toString() || "",
+              status: data.status,
+              notes: data.synopsis || data.notes,
+        });
         } catch (error) {
             setError("Erro de conexão");
         }
     }
-    fetchLivro();
+  fetchLivro();
     
-  }, [id])
+  }, [id, reset])
+
+  useEffect(() => {
+    async function fetchCategorias() {
+      const res = await fetch("/api/categories");
+      const data = await res.json();
+      setCategorias(data);
+    }
+    fetchCategorias();
+  }, [])
 
   function limparEstrelas() {
     setNumStars(0);
@@ -70,49 +81,49 @@ export default function EditBookPage() {
     setNumStars(numStars+1);
   }
 
+  const { atualizarLivro } = useLivros();
+
   async function onSubmit(userData: FormData): Promise<void> {
 
-    const atualizacaoLivro: BookCardProps = {
-        id: dadosLivro?.id || "",
-        title: userData.title,
-        author: userData.author,
-        genre: userData.genre,
-        year: dadosLivro?.year ?? new Date().getFullYear(), 
-        pages: Number(userData.qtdPages),
-        rating: numStars,
-        synopsis: userData.notes,
-        cover: userData.url || dadosLivro?.cover || "https://cdn-icons-png.flaticon.com/512/5999/5999928.png",
-        status: userData.status,
-        totalPaginasLidas: Number(userData.actualPage),
-        onDelete: () => {}
-    };
+  const atualizacaoLivro = {
+      id: dadosLivro?.id || "",
+      title: userData.title,
+      author: userData.author,
+      year: dadosLivro?.year ?? new Date().getFullYear(), 
+      pages: Number(userData.qtdPages) || 0,
+      isbn: userData.isbn,
+      status: userData.status, // Verifique se tem valor
+      rating: numStars,
+      synopsis: userData.notes,
+      cover: userData.url || dadosLivro?.cover || "https://cdn-icons-png.flaticon.com/512/5999/5999928.png",
+      totalPaginasLidas: Number(userData.actualPage) || 0,
+      genreId: userData.genreId, // Já é string, converteremos na API
+  };
+  
+
+  try {
+    const res = await fetch(`/api/books/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(atualizacaoLivro)
+    });
+
+
+    if(!res.ok) {
+      const errorData = await res.json();
+      throw new Error(`Erro ${res.status}: ${errorData.error || errorData.details || "Erro desconhecido"}`);
+    }
+
+    const updatedBook = await res.json();
+    await atualizarLivro(updatedBook);
+    setSuccessMessage("Livro atualizado com sucesso!");
+    setTimeout(() => setSuccessMessage(""), 2000);
+    setTimeout(() => router.push('/library'), 2000) 
     
-    try {
-      const res = await fetch('/api/books/${1}', {
-        method: 'UPDATE',
-        headers: { 'Content-Type' : 'application/json' },
-        body: JSON.stringify(atualizacaoLivro)
-      })
-      console.log(res.ok)
-
-      if(!res.ok) {
-      const errorText = await res.text();
-      console.error("Conteúdo do erro:", errorText);
-      throw new Error(`Erro ${res.status}: ${errorText}`);
-    }
-
-      const updatedBook = await res.json();
-      console.log("Livro atualizado")
-
-      addLivro(updatedBook);
-      // addId();
-      reset();
-      setNumStars(0);
-    } catch (error) {
-      console.error(error)
-    }
-      
+  } catch (error) {
+    alert(`Erro ao atualizar livro: ${error instanceof Error ? error.message : "Erro desconhecido"}`);
   }
+}
 
   return (
     <div className="w-full h-full bg-[#FFFFFF] md:p-8 lg:p-12 ">
@@ -165,20 +176,25 @@ export default function EditBookPage() {
         <div className='flex'>
           <div className='flex flex-col mt-2 w-1/2'>
             <label className='ml-5'>Gênero</label>
-            <select {...register("genre")}  required name="genre" className='border border-gray-300 rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 '>
-              {options.map((optione, id) => (
-                <option key={id} value={optione.genero}>{optione.genero}</option>
+            <select {...register("genreId")}  required  className='border border-gray-300 rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 '>
+              {categorias.map((option) => (
+                <option key={option.id} value={option.id}>{option.genero}</option>
               ))}
             </select>
           </div>
-          <div className='flex flex-col mt-2'>
-            <label className='ml-1'>Status</label>
-            <select {...register("status")} name="" className='border border-gray-300 rounded rouded-sm h-8 mr-5 sm: pl-1.5 w-full'>
-              {opcoesLeitura.map((opcaoLeitura, id) => (
-                <option key={id} value={opcaoLeitura.status}>{opcaoLeitura.status}</option>
-              ))}
-            </select>
-          </div>
+          <div className='flex flex-col mt-2 w-1/2'>
+          <label className='ml-1'>Status</label>
+          <select 
+            {...register("status")} 
+            className='border border-gray-300 rounded rouded-sm h-8 mr-5 sm: pl-1.5 w-full'
+          >
+            {opcoesLeitura.map((opcaoLeitura) => (
+              <option key={opcaoLeitura.status} value={opcaoLeitura.status}>
+                {opcaoLeitura.status}
+              </option>
+            ))}
+          </select>
+        </div>
         </div>
         <div className='mt-3 ml-5'>
             <label className='ml-1'>Avaliação</label>
@@ -196,6 +212,17 @@ export default function EditBookPage() {
           <label className='ml-5'>Notas</label>
           <textarea {...register("notes")} className='border border-gray-300 rounded rouded-sm ml-5 mr-5 pl-1.5' placeholder='Anotações sobre o livro'></textarea>
         </div>
+
+        {successMessage && (
+          <div className="flex justify-center md:justify-center">
+            <div className="bg-green-100 border border-green-400 text-green-700 
+                            dark:bg-green-800 dark:border-green-600 dark:text-green-100
+                            px-3 py-1 rounded-md mt-2 w-full max-w-xs text-center md:max-w-sm md:text-base">
+              {successMessage}✅
+            </div>
+          </div>
+        )}
+        
         <div className='flex justify-center mt-4 mb-4'>
           <Button className='bg-[#252525] text-white font-semibold border text-xs ml-5 justify-center' >
             Editar

@@ -13,10 +13,12 @@ import { useLivros } from '@/context/LivrosContext';
 import { title } from 'process';
 import { FormData } from '../types/books';
 import ChangeTheme from "../dashboard/changeTheme";
+import { useRouter } from 'next/navigation';
 
 
 
 export default function NewBookPage() {
+  const router = useRouter();
   const { register, handleSubmit, reset, formState: { errors }, watch } = useForm<FormData>()
   const titleValue = watch("title");
   const authorValue = watch("author");
@@ -25,7 +27,8 @@ export default function NewBookPage() {
   const [coverUrl, setCoverUrl] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState("");
   const [progress, setProgress] = useState(0);
-
+  const [categorias, setCategorias] = useState<any>([])
+  
   useEffect(() => {
     let filled = 0;
     if (titleValue) filled += 1;
@@ -33,6 +36,15 @@ export default function NewBookPage() {
     const newProgress = (filled / 2) * 100;
     setProgress(newProgress);
   }, [titleValue, authorValue]);
+
+  useEffect(() => {
+    async function fetchCategorias() {
+      const res = await fetch("/api/categories");
+      const data = await res.json();
+      setCategorias(data);
+    }
+    fetchCategorias();
+  }, [])
 
   function limparEstrelas() {
     setNumStars(0);
@@ -43,31 +55,38 @@ export default function NewBookPage() {
   }
 
   async function onSubmit(userData: FormData): Promise<void> {
+    const selectedGenero = userData.genre;
+    const selectedGenreObj = categorias.find((cat: any) => cat.genero === selectedGenero);
+
     const novoLivro: BookCardProps = {
       id: "",
       title: userData.title,
       author: userData.author,
-      genre: userData.genre,
+      genreId: selectedGenreObj ? selectedGenreObj.id : 1,
       year: new Date().getFullYear(),
       pages: Number(userData.qtdPages),
       rating: numStars,
       synopsis: userData.notes,
       cover: userData.url || "https://cdn-icons-png.flaticon.com/512/5999/5999928.png",
       status: userData.status,
-      totalPaginasLidas: Number(userData.actualPage),
+      totalPaginasLidas: Number(userData.actualPage).toString(),
       onDelete: () => {}
-    };
+  };
 
     try {
       const res = await fetch('/api/books', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(novoLivro)
+        
       });
 
+      console.log(res)
+      
       if (!res.ok) {
         const errorText = await res.text();
         throw new Error(`Erro ${res.status}: ${errorText}`);
+      
       }
 
       const createdBook = await res.json();
@@ -76,12 +95,14 @@ export default function NewBookPage() {
       setNumStars(0);
       setCoverUrl("");
       setSuccessMessage("Livro cadastrado com sucesso!");
-      setTimeout(() => setSuccessMessage(""), 3000);
+      setTimeout(() => setSuccessMessage(""), 2000);
+      setTimeout(() => router.push('/library'), 2000) 
 
-    } catch (error) {
-      console.error(error);
+      } catch (error) {
+          console.error(error);
+      }
     }
-  }
+  
 
   return (
     <div className="flex flex-col h-screen bg-[var(--background)] text-[var(--foreground)]">
@@ -169,7 +190,7 @@ export default function NewBookPage() {
           <div className='flex flex-col mt-2 w-1/2'>
             <label className='ml-5'>Gênero</label>
             <select {...register("genre")} required name="genre" className='border border-[var(--border)] rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 '>
-              {options.map((optione, id) => (
+              {categorias.map((optione, id) => (
                 <option key={id} value={optione.genero}>{optione.genero}</option>
               ))}
             </select>

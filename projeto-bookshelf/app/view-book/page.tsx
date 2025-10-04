@@ -20,7 +20,7 @@ export default function ViewBookPage() {
   const router = useRouter();
   const id = searchParams.get("id");
   
-  const [livro, setLivro] = useState<BookCardProps | null>(null);
+  const [livro, setLivro] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 

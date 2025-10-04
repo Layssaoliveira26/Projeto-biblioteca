@@ -138,9 +138,9 @@ export default function Home() {
       </h1>
       <div className="w-full grid grid-cols-2 gap-4 p-4 md:mt-10 md:grid md:grid-cols-4 md:gap-4 md:p-4 max-w-6xl 2xl:mt-30 mx-auto">
         <ReportCard title={"Total de livros"} value={livros.length} image="https://i.pinimg.com/1200x/d6/33/f0/d633f0f54435a0d174a73e593d03acb4.jpg" />
-        <ReportCard title={"Lendo agora"} value={(livros.filter((livro) => livro.genre === "Aventura").length)} image="https://i.pinimg.com/736x/07/2e/8d/072e8d9e2dd30564a030bbe6437e744a.jpg" />
+        <ReportCard title={"Lendo agora"} value={(livros.filter((livro) => livro.status === "LENDO").length)} image="https://i.pinimg.com/736x/07/2e/8d/072e8d9e2dd30564a030bbe6437e744a.jpg" />
         <ReportCard title={"Livros lidos"} value={(livros.filter((livro) => livro.status === "LIDO")).length} image="https://i.pinimg.com/736x/29/45/22/294522b8d609cb12c82028e85fb2a1fe.jpg"/>
-        <ReportCard title={"Páginas lidas"} value={livros.reduce((total, livro) => total + livro.totalPaginasLidas, 0)} image="https://i.pinimg.com/1200x/a7/4b/17/a74b17e4fb43796327b1a12fea1ea05d.jpg"/>
+        <ReportCard title={"Páginas lidas"} value={livros.reduce((total, livro) => total + Number(livro.totalPaginasLidas), 0)} image="https://i.pinimg.com/1200x/a7/4b/17/a74b17e4fb43796327b1a12fea1ea05d.jpg"/>
       </div>
 
     <div/>

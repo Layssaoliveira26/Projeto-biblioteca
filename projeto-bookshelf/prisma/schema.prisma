@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Book {
+  id Int @id @default(autoincrement())
+  title String 
+  author String
+  pages Int?
+  isbn String?
+  status String
+  rating Int?
+  synopsis String?
+  cover String?
+  year Int?
+  totalPaginasLidas String
+  genre Genre @relation(fields: [genreId], references: [id])
+  genreId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Genre {
+  id Int @id @default(autoincrement())
+  genero String @unique
+  books Book[] //um genero tem varios livros dentro dele
+}
