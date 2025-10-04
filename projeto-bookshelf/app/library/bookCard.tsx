@@ -11,7 +11,7 @@ import { LuEye } from "react-icons/lu";
 import { verLivro } from "@/lib/verLivros";
 import DadoLivro from "@/components/ui/verLivro";
 import ViewBookPage from "../view-book/page";
-
+import { useState } from "react";
 export interface BookCardProps {
   id: string;
   title: string;
@@ -32,7 +32,7 @@ export interface BookCardProps {
 
 
 export default function BookCard({ title, author, genre, year, cover, rating, id, onDelete }: BookCardProps) {
-
+  const [open, setOpen] = useState(false);
   return (
     <div className="flex justify-center">
     <Card className="w-64">
@@ -54,6 +54,7 @@ export default function BookCard({ title, author, genre, year, cover, rating, id
         <Link href={`/view-book?id=${id}`}>
           <Button size="sm">
           <LuEye />
+          Ver
           </Button>
         </Link>
         <Link href={`/edit-book?id=${id}`}>
@@ -61,14 +62,40 @@ export default function BookCard({ title, author, genre, year, cover, rating, id
           <CiEdit />
           Editar</Button>
         </Link>
-        <Button size="sm" variant="destructive" onClick={() => {
-          console.log("Exluir", id)
-          onDelete(id)
-        }}>
-        <CiTrash />
+        <Button size="sm" variant="destructive"   onClick={() => setOpen(true)}
+          >
+            <CiTrash />
         </Button>
       </CardFooter>
     </Card>
+     {}
+     {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white dark:bg-neutral-900 rounded-xl shadow-xl w-[90%] max-w-md p-6">
+            <h2 className="text-lg font-bold text-red-600">Confirmar Exclusão</h2>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+              Tem certeza que deseja excluir este livro?  
+              <br />
+              Esta ação não pode ser desfeita.
+            </p>
+
+            <div className="flex justify-end gap-2 mt-6">
+              <Button variant="outline" onClick={() => setOpen(false)}>
+                Cancelar
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={() => {
+                  onDelete(id);
+                  setOpen(false);
+                }}
+              >
+                Excluir Livro
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
   </div>
   );
 }

@@ -14,8 +14,8 @@ export default function Home() {
   return (
   <div className="">
       {/* Header */}
-      <div className="overflow-auto flex flex-row md:flex-row md:items-center md:justify-between rounded-md py-2 shadow-md bg-[var(--card)] px-4 sm:px-6 md:px-12 lg:px-24 xl:px-16 2xl:px-16">
-        <div className="flex flex-row items-center justify-start w-full md:flex-row md:w-auto gap-3 ml-2 lg:ml-4 2xl:ml-20">
+      <div className="overflow-auto flex flex-row md:flex-row md:items-center md:justify-between rounded-md py-2 shadow-md bg-[var(--card)] px-4 sm:px-5 md:px-6 lg:px-8 xl:px-10 2xl:px-2">
+        <div className="flex flex-row items-center justify-start w-full md:flex-row md:w-auto gap-3 ml-2 lg:ml-9 2xl:ml-20">
           <img 
             src="/logo.png" 
             alt="logo" 
@@ -29,7 +29,7 @@ export default function Home() {
           <h1 className="hidden md:block font-bold font-sans mb-0 md:mb-1 text-2xl md:text-3xl xl:text-3xl">Dashboard</h1>
         </div>
 
-        <div className="flex flex-row items-center gap-3 md:gap-6 ml-auto mr-3 lg:mr-4 2xl:mr-20">
+        <div className="flex flex-row items-center gap-3 md:gap-6 ml-auto mr-3 lg:mr-12 2xl:mr-20">
           {/* Modo escuro, claro e sistema */}
           <ChangeTheme />
           <Link href="/library">
@@ -45,7 +45,7 @@ export default function Home() {
       {/* Seção principal */}
       {/* Mobile: row (texto à esquerda + 1 imagem à direita)
           Desktop: row-reverse (texto esquerda + imagens direita) */}
-      <div className="flex flex-row-reverse lg:flex-row-reverse items-center justify-center mt-10 md:mt-16 mb-5 px-6 sm:px-10 md:px-12 lg:px-20 gap-6 md:gap-12 lg:gap-20 xl:gap-47 2xl:gap-80 mr-3 lg:mr-24 2xl:mr-40">
+      <div className="flex flex-row-reverse lg:flex-row-reverse items-center justify-center mt-10 md:mt-16 mb-5 px-6 sm:px-10 md:px-12 lg:px-20 gap-6 md:gap-12 lg:gap-20 xl:gap-55 2xl:gap-80 mr-3 lg:mr-24 2xl:mr-40">
         
         {/* Imagens */}
         <div className="flex w-1/2 justify-center md:justify-end 2xl:mr-30">
@@ -65,7 +65,9 @@ export default function Home() {
                 <img
                   src="https://i.pinimg.com/1200x/9d/82/d6/9d82d654e41a805c10ac4e2a6a772ce9.jpg"
                   alt=""
-                  className="rounded-t-[150px] rounded-b-[10px] object-cover w-full h-full shadow-md border-3 border-[#D99D55]"
+                  className="rounded-t-[150px] rounded-b-[10px] object-cover w-full h-full shadow-md border-3 border-[#D99D55]
+                            transform transition-transform duration-300 
+                            hover:-translate-y-2 hover:scale-105"
                 />
               </div>
               <div className="flex flex-col">
@@ -91,7 +93,9 @@ export default function Home() {
                 <img
                   src="https://i.pinimg.com/736x/01/83/76/018376580e76d06eac2f260ad42d5d7e.jpg"
                   alt=""
-                  className="rounded-t-[10px] rounded-b-[150px] object-cover w-full h-full shadow-md border-3 border-[#F3CEA0]"
+                  className="rounded-t-[10px] rounded-b-[150px] object-cover w-full h-full shadow-md border-3 border-[#F3CEA0]
+                            transform transition-transform duration-300 
+                            hover:-translate-y-2 hover:scale-105"
                 />
               </div>
             </div>
@@ -101,7 +105,9 @@ export default function Home() {
                 <img
                   src="https://i.pinimg.com/736x/24/3e/41/243e4165742e6e75744d85e16bb63a77.jpg"
                   alt=""
-                  className="rounded-t-[150px] rounded-b-[10px] object-cover w-full h-full shadow-md border-3 border-[#D9C6B0]"
+                  className="rounded-t-[150px] rounded-b-[10px] object-cover w-full h-full shadow-md border-3 border-[#D9C6B0]
+                            transform transition-transform duration-300 
+                            hover:-translate-y-2 hover:scale-105"
                 />
               </div>
               <div className="flex flex-col">

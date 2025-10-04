@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import ChangeTheme from "../dashboard/changeTheme";
 import { useEffect, useState } from "react";
 import { Search } from "lucide-react";  
+import NewGenre from "@/components/ui/newGenre";
 
 export default function LibraryPage() {
   const [livros, setLivros] = useState<any[]>([])
@@ -83,8 +84,8 @@ export default function LibraryPage() {
       className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" 
       size={20} 
     />
-    </div>  
-
+    </div >  
+      <div className="flex items-center gap-3">
         <Select
           value={selectedGenre}
           onValueChange={(value) => setSelectedGenre(value)}
@@ -104,6 +105,13 @@ export default function LibraryPage() {
             ))}
           </SelectContent>
         </Select>
+
+        <NewGenre 
+        categorias={categorias} 
+        setCategorias={setCategorias} 
+        className="h-10 flex items-center justify-center"
+        />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

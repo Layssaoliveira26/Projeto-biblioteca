@@ -6,9 +6,18 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-html, body, .card, .popover {
-  transition: background-color 0.5s, color 0.5s;
+:root,
+body {
+  transition: background-color 0.5s ease; 
 }
+
+.bg-\[var\(--card\)\], 
+.bg-\[var\(--background\)\],
+.border-\[var\(--border\)\] {
+  transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+
 
 :root {
   --font-inter: 'Inter', sans-serif;
@@ -154,4 +163,19 @@ h1, .livros-area{
     
   }
 
+}
+
+@keyframes modalIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-modalIn {
+  animation: modalIn 0.3s forwards;
 }

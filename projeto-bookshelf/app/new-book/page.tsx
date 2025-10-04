@@ -14,14 +14,27 @@ import { title } from 'process';
 import { FormData } from '../types/books';
 import ChangeTheme from "../dashboard/changeTheme";
 import { useRouter } from 'next/navigation';
-
-
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 
 export default function NewBookPage() {
   const router = useRouter();
   const { register, handleSubmit, reset, formState: { errors }, watch } = useForm<FormData>()
+
   const titleValue = watch("title");
   const authorValue = watch("author");
+  const qtdPagesValue = watch("qtdPages");
+  const actualPageValue = watch("actualPage");
+  const isbnValue = watch("isbn");
+  const urlValue = watch("url");
+  const genreValue = watch("genre");
+  const statusValue = watch("status");
+  const notesValue = watch("notes");
   const [numStars, setNumStars] = useState(0)
   const { addLivro, idLivro } = useLivros();
   const [coverUrl, setCoverUrl] = useState<string>("");
@@ -29,13 +42,53 @@ export default function NewBookPage() {
   const [progress, setProgress] = useState(0);
   const [categorias, setCategorias] = useState<any>([])
   
+// =======
+//   const [customGenre, setCustomGenre] = useState("");
+//   const [isCustomGenre, setIsCustomGenre] = useState(false);
+
+// >>>>>>> origin/Raquel
   useEffect(() => {
+    const fields = [
+      titleValue,
+      authorValue,
+      qtdPagesValue,
+      actualPageValue,
+      isbnValue,
+      urlValue,
+      genreValue,
+      statusValue,
+      notesValue,
+    ];
+  
+    const filled = fields.filter((f) => {
+      if (typeof f === "string") {
+        return f.trim() !== "";
+      }
+      return f !== undefined && f !== null;
+    }).length;
+    const total = fields.length;
+    const newProgress = Math.min((filled / total) * 100, 100);
+  
+    setProgress(newProgress);
+  }, [
+    titleValue,
+    authorValue,
+    qtdPagesValue,
+    actualPageValue,
+    isbnValue,
+    urlValue,
+    genreValue,
+    statusValue,
+    notesValue,
+  ]);
+
+  /*useEffect(() => { usado anteriormente para progresso apenas com obrigatorios
     let filled = 0;
     if (titleValue) filled += 1;
     if (authorValue) filled += 1;
     const newProgress = (filled / 2) * 100;
     setProgress(newProgress);
-  }, [titleValue, authorValue]);
+  }, [titleValue, authorValue]);*/
 
   useEffect(() => {
     async function fetchCategorias() {
@@ -107,7 +160,7 @@ export default function NewBookPage() {
   return (
     <div className="flex flex-col h-screen bg-[var(--background)] text-[var(--foreground)]">
       <div className='w-full bg-[var(--card)] p-1 md:p-8 lg:p-12'>
-        <div className="flex justify-between mt-6 px-3 md:px-8 items-center">
+        <div className="flex justify-between mt-6 px-3 md:mt-0 md:px-0 items-center">
           <GoBackButton />
           <div className='mr-5'>
             <ChangeTheme />
@@ -149,15 +202,30 @@ export default function NewBookPage() {
 
         <div className='flex flex-col'>
           <label className='ml-5'>Título <span style={{ color: 'red' }}>*</span> </label>
-          <input {...register("title", { required: "Título é obrigatório"})} type="text" placeholder='Ex.: Dom Casmurro' className='border rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 border-[var(--border)]'/>
+          <input 
+            {...register("title")} 
+            type="text" 
+            placeholder='Ex.: Dom Casmurro' 
+            required 
+            className='border rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 border-[var(--border)]'
+          />
           {errors.title && (
-            <span className="text-red-500 text-xs ml-5 mt-1 transition-opacity duration-500">{errors.title.message}</span>
+            <span className="text-red-500 text-xs ml-5 mt-1 transition-opacity duration-500">
+              {errors.title.message}
+            </span>
           )}
         </div>
 
+
         <div className='flex flex-col mt-2'>
           <label className='ml-5'>Autor <span style={{ color: 'red' }}>*</span> </label>
-          <input {...register("author", { required: "Autor é obrigatório" })} type="text" placeholder='Ex.: Machado de Assis' className='border rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 border-[var(--border)]'/>
+          <input 
+            {...register("author")} 
+            type="text" 
+            placeholder='Ex.: Machado de Assis' 
+            required 
+            className='border rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 border-[var(--border)]'
+          />
           {errors.author && (
             <span className="text-red-500 text-xs ml-5 mt-1">{errors.author.message}</span>
           )}
