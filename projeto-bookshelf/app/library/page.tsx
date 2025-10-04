@@ -53,15 +53,15 @@ export default function LibraryPage() {
     }
   }
   function BookCardSkeleton() {
-  return (
-    <div className="border rounded p-4 animate-pulse h-64 flex flex-col justify-between">
-      <div className="bg-gray-300 h-32 mb-2 rounded" />
-      <div className="h-4 bg-gray-300 mb-1 rounded" />
-      <div className="h-4 bg-gray-300 w-1/2 rounded" />
-      <div className="h-8 bg-gray-300 mt-2 rounded" />
-    </div>
-  );
-}
+    return (
+      <div className="border rounded-lg p-4 w-[250px] h-[360px] flex flex-col justify-between transition-all duration-500 ease-in-out shadow-md bg-[var(--card)]">
+        <div className="bg-gray-300 h-40 mb-3 rounded-md w-full transition-colors duration-500" />
+        <div className="h-5 bg-gray-300 mb-2 rounded w-3/4 transition-colors duration-500" />
+        <div className="h-4 bg-gray-300 mb-2 rounded w-1/2 transition-colors duration-500" />
+        <div className="h-9 bg-gray-300 mt-2 rounded w-full transition-colors duration-500" />
+      </div>
+    );
+  }
 
   // Aqui junta busca + filtro
   const livrosFiltrados = livros.filter((livro) => {
@@ -137,16 +137,19 @@ export default function LibraryPage() {
 
 
      {isLoading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {Array.from({ length: 6 }).map((_, i) => (
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
+          {Array.from({ length: 3 }).map((_, i) => (
             <BookCardSkeleton key={i} />
-        ))}
+          ))}
         </div>
       ) : (
-     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
         {livrosFiltrados.length > 0 ? (
-          livrosFiltrados.map((livro) => (
-  <Suspense key={livro.id} fallback={<BookCardSkeleton />}>
+          livrosFiltrados.map(livro => (
+            <Suspense
+               key={livro.id}
+              fallback={<BookCardSkeleton />}
+  >
     <BookCard
       id={livro.id}
       title={livro.title}
