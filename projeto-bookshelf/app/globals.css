@@ -42,7 +42,14 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-transition: background-color 0.5s ease; 
+:root {
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+body {
+  transition: background-color 0.5s ease;
+}
+
 
 .bg-\[var\(--card\)\], 
 .bg-\[var\(--background\)\],
