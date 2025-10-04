@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { LivrosProvider } from "@/context/LivrosContext";
+import { ThemeProvider } from "./dashboard/themeProvider";
+import LogoChange from "./logoChange";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,23 +18,27 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Ressonância Literária",
   description: "",
-  icons: {
-    icon: "/logo.png",
-  },
 };
+
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-br">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <LivrosProvider>
+    <html lang="pt-br" 
+    suppressHydrationWarning
+    className={`${geistSans.variable} ${geistMono.variable}`}>
+  <head>
+    <link id="favicon" rel="icon" href="/logo.png" />
+  </head>
+  <body className="antialiased">
+    <ThemeProvider>
+      <LivrosProvider>
+        <LogoChange/>
         {children}
-        </LivrosProvider>
-      </body>
-    </html>
-  );
-}
+      </LivrosProvider>
+    </ThemeProvider>
+  </body>
+
+</html>
+)}

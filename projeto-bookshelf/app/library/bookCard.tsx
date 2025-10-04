@@ -12,7 +12,6 @@ import { LuEye } from "react-icons/lu";
 import { verLivro } from "@/lib/verLivros";
 import DadoLivro from "@/components/ui/verLivro";
 import ViewBookPage from "../view-book/page";
-
 export interface BookCardProps {
   id: string;
   title: string;
@@ -31,16 +30,15 @@ export interface BookCardProps {
 
 export default function BookCard({ title, author, genre, year, cover, rating, id, onDelete }: BookCardProps) {
 const [isDeleting, setIsDeleting] = useState(false);
+const [open, setOpen] = useState(false);
 
 async function handleDelete() {
-    setIsDeleting(true);
+  setIsDeleting(true);
+  await onDelete(id);
+  setIsDeleting(false);
+  setOpen(false);
+}
 
- await new Promise((res) => setTimeout(res, 1000));
-
-    onDelete(id);
-
-    setIsDeleting(false);
-  }
 
   return (
     <div className="flex justify-center">
@@ -56,25 +54,56 @@ async function handleDelete() {
       </CardHeader>
       <CardContent>
         <p className="-mt-4">{author}</p>
-        <Badge variant="outline" className="mt-3">{genre}</Badge>
+        <Badge variant="outline" className="mt-3 mr-2">{genre}</Badge>
         <Badge variant="outline" className="mt-3">{year}</Badge>   
       </CardContent>
-      <CardFooter className="flex justify-center gap-2">
+      <CardFooter className="flex justify-center gap-5">
         <Link href={`/view-book?id=${id}`}>
           <Button size="sm">
           <LuEye />
-          Ver</Button>
+          Ver
+          </Button>
         </Link>
-        <Button size="sm">
-        <CiEdit />
-        Editar</Button>
-        <Button size="sm" variant="destructive" onClick={async () => { setIsDeleting(true); await onDelete(id); setIsDeleting(false);
-  }}
->
-  {isDeleting ? "Excluindo..." : "Excluir"}
-</Button>
-        </CardFooter>
-      </Card>
-    </div>
+        <Link href={`/edit-book?id=${id}`}>
+          <Button size="sm">
+          <CiEdit />
+          Editar</Button>
+        </Link>
+        <Button size="sm" variant="destructive"   onClick={() => setOpen(true)}
+          >
+            <CiTrash />
+        </Button>
+      </CardFooter>
+    </Card>
+     {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white dark:bg-neutral-900 rounded-xl shadow-xl w-[90%] max-w-md p-6">
+            <h2 className="text-lg font-bold text-red-600">Confirmar Exclusão</h2>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+              Tem certeza que deseja excluir este livro?  
+              <br />
+              Esta ação não pode ser desfeita.
+            </p>
+
+            <div className="flex justify-end gap-2 mt-6">
+              <Button variant="outline" onClick={() => setOpen(false)}>
+                Cancelar
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={async () => { 
+            setIsDeleting(true);      
+            await onDelete(id);        
+            setIsDeleting(false);      
+            setOpen(false);           
+          }}
+        >
+          {isDeleting ? "Excluindo..." : "Excluir Livro"}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+  </div>
   );
 }
