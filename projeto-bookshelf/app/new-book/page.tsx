@@ -89,8 +89,8 @@ export default function NewBookPage() {
       
       }
 
-      const createdBook = await res.json();
-      addLivro(createdBook);
+      // const createdBook = await res.json();
+      // addLivro(createdBook);
       reset();
       setNumStars(0);
       setCoverUrl("");
@@ -234,7 +234,7 @@ export default function NewBookPage() {
         )}
 
         <div className='flex justify-center mt-4 mb-4'>
-          <Button className='font-semibold border text-xs ml-5 justify-center border-[var(--border)]' >
+          <Button type='submit' className='font-semibold border text-xs ml-5 justify-center border-[var(--border)]' >
             Cadastrar
           </Button>
         </div>
