@@ -7,7 +7,7 @@ import { IoMdArrowBack, IoMdImages } from "react-icons/io";
 import { opcoesLeitura, options } from '@/lib/options';
 import { StarRating } from "@/components/ui/custom-components/star";
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { BookCardProps } from '../library/bookCard';
 import { useLivros } from '@/context/LivrosContext';
 import { title } from 'process';
@@ -23,8 +23,8 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-
-export default function EditBookPage() {
+// Componente que usa useSearchParams
+function EditBookContent() {
   const router = useRouter()
   const [successMessage, setSuccessMessage] = useState("");
   const [progress, setProgress] = useState(0);
@@ -36,8 +36,6 @@ export default function EditBookPage() {
   const [numStars, setNumStars] = useState(0)
   const [error, setError] = useState("");
   const [categorias, setCategorias] = useState<any>([])
-
-
 
   useEffect(() => {
     if (!id) return;
@@ -276,5 +274,14 @@ export default function EditBookPage() {
         </div>
       </form>
     </div>
+  );
+}
+
+// Componente principal com Suspense
+export default function EditBookPage() {
+  return (
+    <Suspense fallback={<div>Carregando...</div>}>
+      <EditBookContent />
+    </Suspense>
   );
 }

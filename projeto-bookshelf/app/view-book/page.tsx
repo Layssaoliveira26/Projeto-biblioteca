@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { Divide } from "lucide-react";
 import { CiTrash } from "react-icons/ci";
 import { CiEdit } from "react-icons/ci";
+import { Suspense } from 'react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,8 +26,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
-
-export default function ViewBookPage() {
+// Componente principal que usa useSearchParams
+function ViewBookContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const id = searchParams.get("id");
@@ -38,7 +39,6 @@ export default function ViewBookPage() {
   useEffect(() => {
     async function fetchLivro() {
       if (!id) return;
-      
 
       try {
         const res = await fetch(`/api/books/${id}`, { method: "GET"})
@@ -56,13 +56,10 @@ export default function ViewBookPage() {
       } finally {
         setLoading(false);
       }
-      
     }
 
     fetchLivro();
   }, [id])
-
-  
 
   async function handleDelete() {
     if (!id) return;
@@ -73,7 +70,6 @@ export default function ViewBookPage() {
         const data = await res.json();
         alert(data.message || "Erro ao deletar livro.");
         return;
-        
       }
 
       router.push("/library");
@@ -81,7 +77,6 @@ export default function ViewBookPage() {
     } catch (error) {
       alert("Erro de conexão");
     }
-    
   }
 
   return (
@@ -89,14 +84,14 @@ export default function ViewBookPage() {
       
       <div className="flex md:flex-row items-start md:items-center justify-between gap-3 p-4 md:p-8 lg:p-12">
         <GoBackButton />
-        <div className="flex gap-2 md:gap-4"> {}
+        <div className="flex gap-2 md:gap-4">
           <ChangeTheme />
-          <Link href={`/edit-book?id=${id}`}> {}
+          <Link href={`/edit-book?id=${id}`}>
             <Button size="sm">
-            <CiEdit />
-            Editar Livro</Button>
+              <CiEdit />
+              Editar Livro
+            </Button>
           </Link>
-          {}
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button size="sm" variant="destructive">
@@ -131,7 +126,15 @@ export default function ViewBookPage() {
         {error && <div className="text-red-500">{error}</div>}
         {!loading && !error && livro && <DadoLivro livro={livro} />}
       </div>
-    
     </div>
+  );
+}
+
+// Componente principal com Suspense
+export default function ViewBookPage() {
+  return (
+    <Suspense fallback={<div>Carregando...</div>}>
+      <ViewBookContent />
+    </Suspense>
   );
 }
