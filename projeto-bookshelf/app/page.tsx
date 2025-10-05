@@ -1,5 +1,8 @@
-import { redirect } from "next/navigation"
-
 export default function Home() {
-  redirect("/dashboard")
+  return (
+    <div>
+      <h1>Teste - App Funcionando</h1>
+      <p>Dashboard em: /dashboard</p>
+    </div>
+  )
 }
