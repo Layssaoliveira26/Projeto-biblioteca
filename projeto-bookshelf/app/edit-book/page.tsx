@@ -105,7 +105,7 @@ function EditBookContent() {
     }
   }
 
-  // CORREÇÃO: Função atualizarLivro removida - não existe no useSafeLivros
+
   async function onSubmit(userData: FormData): Promise<void> {
     const atualizacaoLivro = {
       id: dadosLivro?.id || "",

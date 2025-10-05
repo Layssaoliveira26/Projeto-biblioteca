@@ -20,7 +20,7 @@ export default function ChangeTheme() {
   }, []);
 
   const themeIcons: Record<"light" | "dark" | "system", ReactElement> = {
-    light: <PiSunLight className="w-5 h-5" />, // ✅ ESTA LINHA ESTÁ FALTANDO NO SEU CÓDIGO
+    light: <PiSunLight className="w-5 h-5" />, 
     dark: <PiMoon className="w-5 h-5" />,
     system: <PiMonitorLight className="w-5 h-5" />,
   };

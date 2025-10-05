@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { StarRating } from "@/components/ui/custom-components/star";
 
 export default function DadoLivro({ livro }: { livro: BookCardProps }) {
-    const { genre } = livro as any;
+    const { genre } = livro ;
 
     return (
         <main className="flex flex-col h-full w-full items-center">

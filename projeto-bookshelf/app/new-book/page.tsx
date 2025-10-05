@@ -44,7 +44,6 @@ export default function NewBookPage() {
 //   const [customGenre, setCustomGenre] = useState("");
 //   const [isCustomGenre, setIsCustomGenre] = useState(false);
 
-// >>>>>>> origin/Raquel
   useEffect(() => {
     const fields = [
       titleValue,
