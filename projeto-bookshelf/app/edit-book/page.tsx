@@ -230,7 +230,7 @@ function EditBookContent() {
             <label className='ml-5'>Gênero</label>
             <select {...register("genreId")} required className='border border-gray-300 rounded h-8 ml-5 mr-3 pl-1.5'>
               {/* CORREÇÃO: categorias sempre é array */}
-              {categorias.map((option: any) => (
+              {Array.isArray(categorias) && categorias.map((option: any) => (
                 <option key={option.id} value={option.id}>{option.genero}</option>
               ))}
             </select>
@@ -242,7 +242,7 @@ function EditBookContent() {
               {...register("status")} 
               className='border border-gray-300 rounded h-8 mr-5 pl-1.5 w-full'
             >
-              {opcoesLeitura.map((opcaoLeitura) => (
+              {Array.isArray(opcoesLeitura) && opcoesLeitura.map((opcaoLeitura: any) => (
                 <option key={opcaoLeitura.status} value={opcaoLeitura.status}>
                   {opcaoLeitura.status}
                 </option>

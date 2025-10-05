@@ -116,7 +116,7 @@ export default function LibraryPage() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Todos</SelectItem>
-            {categorias.map((categoria) => (
+            {Array.isArray(categorias) && categorias.map((categoria) => (
               <SelectItem
                 key={categoria.genero}
                 value={categoria.genero.toLowerCase()}
@@ -144,7 +144,7 @@ export default function LibraryPage() {
         </div>
       ) : (
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
-        {livrosFiltrados.length > 0 ? (
+        {Array.isArray(livrosFiltrados) && livrosFiltrados.length > 0 ? (
           livrosFiltrados.map(livro => (
                
   //             fallback={<BookCardSkeleton />}
