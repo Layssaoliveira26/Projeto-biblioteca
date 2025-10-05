@@ -130,7 +130,7 @@ function ViewBookContent() {
   );
 }
 
-// Componente principal com Suspense
+// Componente principal com Suspenses
 export default function ViewBookPage() {
   return (
     <Suspense fallback={<div>Carregando...</div>}>
