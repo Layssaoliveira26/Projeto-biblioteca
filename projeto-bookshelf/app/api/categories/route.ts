@@ -12,10 +12,9 @@ export async function GET() {
     }
 }
 
-// POST - só ajustar o catch
-export async function POST(req: Request) {
+export async function POST(request: Request) {
     try {
-        const data = await req.json()
+        const data = await request.json()
         const newGenre = await prisma.genre.create({
             data: {
                 genero: data.genero,
