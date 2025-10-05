@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useEffect, useState, ReactElement } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -19,13 +19,12 @@ export default function ChangeTheme() {
     setMounted(true);
   }, []);
 
-  const themeIcons: Record<"light" | "dark" | "system", JSX.Element> = {
-    light: <PiSunLight className="w-5 h-5" />,
+  const themeIcons: Record<"light" | "dark" | "system", ReactElement> = {
+    light: <PiSunLight className="w-5 h-5" />, // ✅ ESTA LINHA ESTÁ FALTANDO NO SEU CÓDIGO
     dark: <PiMoon className="w-5 h-5" />,
     system: <PiMonitorLight className="w-5 h-5" />,
   };
 
- 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

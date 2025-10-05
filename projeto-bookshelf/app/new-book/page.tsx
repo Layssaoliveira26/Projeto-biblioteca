@@ -32,11 +32,10 @@ export default function NewBookPage() {
   const actualPageValue = watch("actualPage");
   const isbnValue = watch("isbn");
   const urlValue = watch("url");
-  const genreValue = watch("genre");
+  const genreValue = watch("genreId");
   const statusValue = watch("status");
   const notesValue = watch("notes");
   const [numStars, setNumStars] = useState(0)
-  const { addLivro, idLivro } = useLivros();
   const [coverUrl, setCoverUrl] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState("");
   const [progress, setProgress] = useState(0);
@@ -108,21 +107,21 @@ export default function NewBookPage() {
   }
 
   async function onSubmit(userData: FormData): Promise<void> {
-    const selectedGenero = userData.genre;
+    const selectedGenero = userData.genreId;
     const selectedGenreObj = categorias.find((cat: any) => cat.genero === selectedGenero);
 
     const novoLivro: BookCardProps = {
       id: "",
       title: userData.title,
       author: userData.author,
-      genreId: selectedGenreObj ? selectedGenreObj.id : 1,
+      genre: selectedGenreObj ? selectedGenreObj.id : 1,
       year: new Date().getFullYear(),
       pages: Number(userData.qtdPages),
       rating: numStars,
       synopsis: userData.notes,
       cover: userData.url || "https://cdn-icons-png.flaticon.com/512/5999/5999928.png",
       status: userData.status,
-      totalPaginasLidas: Number(userData.actualPage).toString(),
+      totalPaginasLidas: String(userData.actualPage || "0"),
       onDelete: () => {}
   };
 
@@ -257,9 +256,9 @@ export default function NewBookPage() {
         <div className='flex'>
           <div className='flex flex-col mt-2 w-1/2'>
             <label className='ml-5'>Gênero</label>
-            <select {...register("genre")} required name="genre" className='border border-[var(--border)] rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 '>
-              {categorias.map((optione, id) => (
-                <option key={id} value={optione.genero}>{optione.genero}</option>
+            <select {...register("genreId")} required className='border border-[var(--border)] rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 '>
+              {categorias.map((optione: any) => (
+                <option key={optione.id} value={optione.genero}>{optione.genero}</option>
               ))}
             </select>
           </div>

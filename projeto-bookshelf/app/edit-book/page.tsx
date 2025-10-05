@@ -7,7 +7,6 @@ import { IoMdArrowBack, IoMdImages } from "react-icons/io";
 import { opcoesLeitura, options } from '@/lib/options';
 import { StarRating } from "@/components/ui/custom-components/star";
 import { useForm } from 'react-hook-form';
-import { livros } from '@/lib/livros';
 import { useEffect, useState } from 'react';
 import { BookCardProps } from '../library/bookCard';
 import { useLivros } from '@/context/LivrosContext';
@@ -224,7 +223,7 @@ export default function EditBookPage() {
           <div className='flex flex-col mt-2'>
             <label className='ml-5'>Gênero</label>
             <select {...register("genreId")}  required  className='border border-gray-300 rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 '>
-              {categorias.map((option) => (
+              {categorias.map((option: any) => (
                 <option key={option.id} value={option.id}>{option.genero}</option>
               ))}
             </select>

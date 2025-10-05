@@ -9,9 +9,8 @@ import Link from "next/link";
 import { CiTrash } from "react-icons/ci";
 import { CiEdit } from "react-icons/ci";
 import { LuEye } from "react-icons/lu";
-import { verLivro } from "@/lib/verLivros";
-import DadoLivro from "@/components/ui/verLivro";
-import ViewBookPage from "../view-book/page";
+// import DadoLivro from "@/components/ui/verLivro";
+// import ViewBookPage from "../view-book/page";
 export interface BookCardProps {
   id: string;
   title: string;
@@ -26,7 +25,7 @@ export interface BookCardProps {
   synopsis: string;
   cover: string;
   status: string;
-  totalPaginasLidas: number;
+  totalPaginasLidas: string;
   onDelete: (id: string) => void;
 }
 
