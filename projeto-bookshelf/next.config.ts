@@ -1,14 +1,12 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
-  output: "standalone",
-  eslint: {
-    ignoreDuringBuilds: true, // ✅ Ignora ESLint durante build
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    optimizeCss: false, // Desabilita Lightning CSS
   },
-  typescript: {
-    ignoreBuildErrors: true, // ✅ Ignora erros TypeScript durante build
+  // ou para versões mais recentes:
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
   },
-};
+}
 
-export default nextConfig;
+module.exports = nextConfig
