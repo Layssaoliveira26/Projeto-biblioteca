@@ -15,7 +15,7 @@ export interface BookCardProps {
   id: string;
   title: string;
   author: string;
-  genre: {
+  genreId: {
     id: number;
     genero: string;
   }
