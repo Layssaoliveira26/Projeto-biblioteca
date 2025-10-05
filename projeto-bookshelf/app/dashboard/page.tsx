@@ -4,12 +4,12 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button"
 import ReportCard from "./reportCard";
-import { useLivros } from "@/context/LivrosContext";
+import { useSafeLivros } from "@/hooks/useLivros";
 import ChangeTheme from './changeTheme';
 
 
 export default function Home() {
-  const { livros = [] } = useLivros();
+  const { livros = [] } = useSafeLivros();
 
   return (
   <div className="">

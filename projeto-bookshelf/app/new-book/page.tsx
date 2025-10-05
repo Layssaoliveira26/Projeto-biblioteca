@@ -9,7 +9,6 @@ import { StarRating } from "@/components/ui/custom-components/star";
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import { BookCardProps } from '../library/bookCard';
-import { useLivros } from '@/context/LivrosContext';
 import { title } from 'process';
 import { FormData } from '../types/books';
 import ChangeTheme from "../dashboard/changeTheme";
