@@ -1,5 +1,6 @@
 "Use client";
 
+import { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
@@ -11,7 +12,6 @@ import { LuEye } from "react-icons/lu";
 import { verLivro } from "@/lib/verLivros";
 import DadoLivro from "@/components/ui/verLivro";
 import ViewBookPage from "../view-book/page";
-import { useState } from "react";
 export interface BookCardProps {
   id: string;
   title: string;
@@ -32,7 +32,16 @@ export interface BookCardProps {
 
 
 export default function BookCard({ title, author, genre, year, cover, rating, id, onDelete }: BookCardProps) {
-  const [open, setOpen] = useState(false);
+const [isDeleting, setIsDeleting] = useState(false);
+const [open, setOpen] = useState(false);
+
+async function handleDelete() {
+  setIsDeleting(true);
+  await onDelete(id);
+  setIsDeleting(false);
+  setOpen(false);
+}
+
   return (
     <div className="flex justify-center">
     <Card className="w-64">
@@ -68,7 +77,6 @@ export default function BookCard({ title, author, genre, year, cover, rating, id
         </Button>
       </CardFooter>
     </Card>
-     {}
      {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white dark:bg-neutral-900 rounded-xl shadow-xl w-[90%] max-w-md p-6">
@@ -85,12 +93,14 @@ export default function BookCard({ title, author, genre, year, cover, rating, id
               </Button>
               <Button
                 variant="destructive"
-                onClick={() => {
-                  onDelete(id);
-                  setOpen(false);
-                }}
-              >
-                Excluir Livro
+                onClick={async () => { 
+            setIsDeleting(true);      
+            await onDelete(id);        
+            setIsDeleting(false);      
+            setOpen(false);           
+          }}
+        >
+          {isDeleting ? "Excluindo..." : "Excluir Livro"}
               </Button>
             </div>
           </div>

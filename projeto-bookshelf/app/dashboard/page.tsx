@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect} from "react";
+// import { useState, useEffect} from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button"
 import ReportCard from "./reportCard";
@@ -16,6 +16,8 @@ export default function Home() {
       {/* Header */}
       <div className="overflow-auto flex flex-row md:flex-row md:items-center md:justify-between rounded-md py-2 shadow-md bg-[var(--card)] px-4 sm:px-5 md:px-6 lg:px-8 xl:px-10 2xl:px-2">
         <div className="flex flex-row items-center justify-start w-full md:flex-row md:w-auto gap-3 ml-2 lg:ml-9 2xl:ml-20">
+      {/* <div className="overflow-auto flex flex-row md:flex-row md:items-center md:justify-between rounded-md py-2 shadow-md bg-[var(--card)] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
+        <div className="flex flex-row items-center justify-start w-full md:flex-row md:w-auto gap-3"> */}
           <img 
             src="/logo.png" 
             alt="logo" 

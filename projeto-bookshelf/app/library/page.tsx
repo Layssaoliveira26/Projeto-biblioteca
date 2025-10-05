@@ -3,7 +3,7 @@
 import GoBackButton from "@/components/ui/custom-components/goBackButton";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import BookCard, { BookCardProps } from "./bookCard";
+import BookCard from "./bookCard";
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import ChangeTheme from "../dashboard/changeTheme";
@@ -16,12 +16,22 @@ export default function LibraryPage() {
   const [categorias, setCategorias] = useState<any[]>([])
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("all");
+  // const BookCard = lazy(() => import("./bookCard"));
+  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     async function fetchLivros() {
-      const res = await fetch("/api/books");
-      const data = await res.json();
-      setLivros(data);
+      try {
+        const res = await fetch("/api/books");
+        const data = await res.json();
+        setLivros(data);
+      } catch (error) {
+        console.error("Erro ao carregar os livros:", error)
+      } finally {
+        setIsLoading(false);
+      }
+      
     }
     fetchLivros();
   }, [])
@@ -40,6 +50,17 @@ export default function LibraryPage() {
     if (res.ok) {
       setLivros((prev) => prev.filter((livro) => livro.id !== id));
     }
+  }
+
+  function BookCardSkeleton() {
+    return (
+      <div className="border rounded-lg p-4 w-[250px] h-[360px] flex flex-col justify-between transition-all duration-500 ease-in-out shadow-md bg-[var(--card)]">
+        <div className="bg-gray-300 h-40 mb-3 rounded-md w-full transition-colors duration-500" />
+        <div className="h-5 bg-gray-300 mb-2 rounded w-3/4 transition-colors duration-500" />
+        <div className="h-4 bg-gray-300 mb-2 rounded w-1/2 transition-colors duration-500" />
+        <div className="h-9 bg-gray-300 mt-2 rounded w-full transition-colors duration-500" />
+      </div>
+    );
   }
 
   // Aqui junta busca + filtro
@@ -114,29 +135,41 @@ export default function LibraryPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+
+     {isLoading ? (
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <BookCardSkeleton key={i} />
+          ))}
+        </div>
+      ) : (
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
         {livrosFiltrados.length > 0 ? (
-          livrosFiltrados.map((livro, index) => (
-            <BookCard
-              key={index}
-              id={livro.id}
-              title={livro.title}
-              author={livro.author}
-              genre={livro.genre}
-              year={livro.year}
-              pages={livro.pages}
-              rating={livro.rating}
-              synopsis={livro.synopsis}
-              cover={livro.cover}
-              status={livro.status}
-              totalPaginasLidas={livro.totalPaginasLidas}
-              onDelete={() => handleDelete(livro.id)}
-            />
-          ))
-        ) : (
-          <p className="text-gray-500">Nenhum livro encontrado.</p>
-        )}
-      </div>
-    </div>
-  );
+          livrosFiltrados.map(livro => (
+               
+  //             fallback={<BookCardSkeleton />}
+  // >
+    <BookCard
+      key={livro.id}
+      id={livro.id}
+      title={livro.title}
+      author={livro.author}
+      genre={livro.genre}
+      year={livro.year}
+      pages={livro.pages}
+      rating={livro.rating}
+      synopsis={livro.synopsis}
+      cover={livro.cover}
+      status={livro.status}
+      totalPaginasLidas={livro.totalPaginasLidas}
+      onDelete={() => handleDelete(livro.id)}
+    />
+ ))
+ ) : (
+    <p className="text-gray-500">Nenhum livro encontrado.</p>
+  )}
+  </div>
+  )}
+  </div>
+ );
 }
