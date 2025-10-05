@@ -30,7 +30,7 @@ export interface BookCardProps {
 }
 
 
-export default function BookCard({ title, author, genre, year, cover, rating, id, onDelete }: BookCardProps) {
+export default function BookCard({ title, author, genreId, year, cover, rating, id, onDelete }: BookCardProps) {
 const [isDeleting, setIsDeleting] = useState(false);
 const [open, setOpen] = useState(false);
 
@@ -55,7 +55,7 @@ async function handleDelete() {
       </CardHeader>
       <CardContent>
         <p className="-mt-4">{author}</p>
-        <Badge variant="outline" className="mt-3">{genre.genero}</Badge>
+        <Badge variant="outline" className="mt-3">{genreId.genero}</Badge>
         <Badge variant="outline" className="mt-3">{year}</Badge>   
       </CardContent>
       <CardFooter className="flex justify-center gap-5">

@@ -154,7 +154,7 @@ export default function LibraryPage() {
       id={livro.id}
       title={livro.title}
       author={livro.author}
-      genre={livro.genre}
+      genreId={livro.genre}
       year={livro.year}
       pages={livro.pages}
       rating={livro.rating}
