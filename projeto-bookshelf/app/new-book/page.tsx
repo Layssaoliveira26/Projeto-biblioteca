@@ -114,7 +114,7 @@ export default function NewBookPage() {
       id: "",
       title: userData.title,
       author: userData.author,
-      genre: selectedGenreObj ? selectedGenreObj.id : 1,
+      genreId: selectedGenreObj ? selectedGenreObj.id : 1,
       year: new Date().getFullYear(),
       pages: Number(userData.qtdPages),
       rating: numStars,
