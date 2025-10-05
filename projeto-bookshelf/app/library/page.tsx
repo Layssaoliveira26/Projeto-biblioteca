@@ -50,7 +50,7 @@ export default function LibraryPage() {
 
     const matchGenre =
       selectedGenre === "all" ||
-      livro.genre.toLowerCase() === selectedGenre.toLowerCase();
+      livro.genre?.genero?.toLowerCase() === selectedGenre.toLowerCase();
 
     return matchSearch && matchGenre;
   });

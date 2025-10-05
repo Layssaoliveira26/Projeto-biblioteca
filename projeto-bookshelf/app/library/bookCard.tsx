@@ -16,7 +16,10 @@ export interface BookCardProps {
   id: string;
   title: string;
   author: string;
-  genre: string;
+  genre: {
+    id: number;
+    genero: string;
+  }
   year: number;
   pages: number;
   rating: number;
@@ -44,7 +47,7 @@ export default function BookCard({ title, author, genre, year, cover, rating, id
       </CardHeader>
       <CardContent>
         <p className="-mt-4">{author}</p>
-        <Badge variant="outline" className="mt-3 mr-2">{genre}</Badge>
+        <Badge variant="outline" className="mt-3 mr-2">{genre.genero}</Badge>
         <Badge variant="outline" className="mt-3">{year}</Badge>   
       </CardContent>
       <CardFooter className="flex justify-center gap-5">

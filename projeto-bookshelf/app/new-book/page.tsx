@@ -6,13 +6,14 @@ import { Button } from "@/components/ui/button";
 import { IoMdArrowBack, IoMdImages } from "react-icons/io";
 import { opcoesLeitura, options } from '@/lib/options';
 import { StarRating } from "@/components/ui/custom-components/star";
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import { BookCardProps } from '../library/bookCard';
 import { useLivros } from '@/context/LivrosContext';
 import { title } from 'process';
 import { FormData } from '../types/books';
 import ChangeTheme from "../dashboard/changeTheme";
+import { useRouter } from 'next/navigation';
 import {
   Select,
   SelectTrigger,
@@ -21,9 +22,10 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-
 export default function NewBookPage() {
-  const { register, handleSubmit, reset, formState: { errors }, watch, setValue } = useForm<FormData>()
+  const router = useRouter();
+  const { register, handleSubmit,control, reset, formState: { errors }, watch } = useForm<FormData>()
+
   const titleValue = watch("title");
   const authorValue = watch("author");
   const qtdPagesValue = watch("qtdPages");
@@ -38,9 +40,13 @@ export default function NewBookPage() {
   const [coverUrl, setCoverUrl] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState("");
   const [progress, setProgress] = useState(0);
-  const [customGenre, setCustomGenre] = useState("");
-  const [isCustomGenre, setIsCustomGenre] = useState(false);
+  const [categorias, setCategorias] = useState<any>([])
+  
+// =======
+//   const [customGenre, setCustomGenre] = useState("");
+//   const [isCustomGenre, setIsCustomGenre] = useState(false);
 
+// >>>>>>> origin/Raquel
   useEffect(() => {
     const fields = [
       titleValue,
@@ -84,6 +90,15 @@ export default function NewBookPage() {
     setProgress(newProgress);
   }, [titleValue, authorValue]);*/
 
+  useEffect(() => {
+    async function fetchCategorias() {
+      const res = await fetch("/api/categories");
+      const data = await res.json();
+      setCategorias(data);
+    }
+    fetchCategorias();
+  }, [])
+
   function limparEstrelas() {
     setNumStars(0);
   }
@@ -93,45 +108,54 @@ export default function NewBookPage() {
   }
 
   async function onSubmit(userData: FormData): Promise<void> {
+    const selectedGenero = userData.genre;
+    const selectedGenreObj = categorias.find((cat: any) => cat.genero === selectedGenero);
+
     const novoLivro: BookCardProps = {
       id: "",
       title: userData.title,
       author: userData.author,
-      genre: userData.genre,
+      genreId: selectedGenreObj ? selectedGenreObj.id : 1,
       year: new Date().getFullYear(),
       pages: Number(userData.qtdPages),
       rating: numStars,
       synopsis: userData.notes,
       cover: userData.url || "https://cdn-icons-png.flaticon.com/512/5999/5999928.png",
       status: userData.status,
-      totalPaginasLidas: Number(userData.actualPage),
+      totalPaginasLidas: Number(userData.actualPage).toString(),
       onDelete: () => {}
-    };
+  };
 
     try {
       const res = await fetch('/api/books', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(novoLivro)
+        
       });
 
+      console.log(res)
+      
       if (!res.ok) {
         const errorText = await res.text();
         throw new Error(`Erro ${res.status}: ${errorText}`);
+      
       }
 
-      const createdBook = await res.json();
-      addLivro(createdBook);
+      // const createdBook = await res.json();
+      // addLivro(createdBook);
       reset();
       setNumStars(0);
       setCoverUrl("");
       setSuccessMessage("Livro cadastrado com sucesso!");
-      setTimeout(() => setSuccessMessage(""), 3000);
+      setTimeout(() => setSuccessMessage(""), 2000);
+      setTimeout(() => router.push('/library'), 2000) 
 
-    } catch (error) {
-      console.error(error);
+      } catch (error) {
+          console.error(error);
+      }
     }
-  }
+  
 
   return (
     <div className="flex flex-col h-screen bg-[var(--background)] text-[var(--foreground)]">
@@ -230,79 +254,72 @@ export default function NewBookPage() {
           />
         </div>
 
-        <div className='flex'>
-          <div className='flex flex-col mt-2 w-1/2'>
-            <label className='ml-5'>Gênero</label>
-            <Select
-              onValueChange={(value) => {
-                if (value === "Outro") {
-                  setIsCustomGenre(true);
-                  setValue("genre", "");
-                } else {
-                  setIsCustomGenre(false);
-                  setValue("genre", value); 
-                }
-              }}
-              defaultValue={watch("genre")}
-            >
-              <SelectTrigger className='border border-[var(--border)] rounded rouded-sm h-8 ml-5 mr-5 pl-1.5 w-36 sm:w-44'>
-                <SelectValue placeholder="Selecione o gênero" />
-              </SelectTrigger>
-              <SelectContent>
-                {options.map((optione, id) => (
-                  <SelectItem key={id} value={optione.genero}>
-                    {optione.genero}
-                  </SelectItem>
-                ))}
-                <SelectItem value="Outro">Outro</SelectItem> {}
-              </SelectContent>
-            </Select>
-            {isCustomGenre && (
-            <input
-              type="text"
-              placeholder="Digite o novo gênero"
-              value={customGenre}
-              onChange={(e) => {
-                setCustomGenre(e.target.value);
-                setValue("genre", e.target.value);
-              }}
-              className="border rounded-sm h-8 ml-5 mr-5 pl-1.5 border-[var(--border)] mt-2"
+        <div className="flex flex-row gap-3 mt-4 px-5">
+          <div className="flex flex-col flex-[1.5]">
+            <label className="mb-1">Gênero</label>
+            <Controller
+              name="genre"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger className="w-full h-10 border border-[var(--border)] rounded-sm pl-4 pr-4 bg-transparent text-[var(--foreground)] box-border">
+                    <SelectValue placeholder="Romance" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categorias.map((optione, id) => (
+                      <SelectItem
+                        key={id}
+                        value={optione.genero}
+                        className="hover:bg-[var(--accent)] hover:text-white"
+                      >
+                        {optione.genero}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
             />
-          )}
+          </div>
 
-
-            </div>
-            <div className='flex flex-col mt-2'>
-              <label className='ml-1'>Status</label>
-              <Select
-                onValueChange={(value) => setValue("status", value)}
-                defaultValue={watch("status")}
-              >
-                <SelectTrigger className='border border-[var(--border)] rounded rouded-sm h-8 mr-5 pl-1.5 w-36 sm:w-44'>
-                  <SelectValue placeholder="Selecione o status" />
-                </SelectTrigger>
-                <SelectContent>
-                  {opcoesLeitura.map((opcaoLeitura, id) => (
-                    <SelectItem key={id} value={opcaoLeitura.status}>
-                      {opcaoLeitura.status}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-            </Select>
+          <div className="flex flex-col flex-1">
+            <label className="mb-1">Status</label>
+            <Controller
+              name="status"
+              control={control}
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger className="w-full h-10 border border-[var(--border)] rounded-sm pl-4 pr-4 bg-transparent text-[var(--foreground)] box-border">
+                    <SelectValue placeholder="QUERO LER" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {opcoesLeitura.map((opcaoLeitura, id) => (
+                      <SelectItem
+                        key={id}
+                        value={opcaoLeitura.status}
+                        className="hover:bg-[var(--accent)] hover:text-white"
+                      >
+                        {opcaoLeitura.status}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
           </div>
         </div>
 
         <div className='mt-3 ml-5'>
-          <label className='ml-1'>Avaliação</label>
-          <div className='flex items-center'>
-            <div className='cursor-pointer' onClick={() => sumStars()}>
-              <StarRating rating={numStars} />
+            <label className='ml-1'>Avaliação</label>
+            <div className='flex items-center'>
+              <div className='cursor-pointer' {...register("avaliation")} onClick={() => sumStars()}>
+                <StarRating rating={numStars} />
+              </div>
+              <Button className=' border border-[var(--border)] text-xs ml-5' onClick={limparEstrelas}>
+                Limpar
+              </Button>
+              <span className='ml-5 text-sm'>{(numStars > 0)? "Com Avaliação": "Sem avaliação"}</span>
             </div>
-            <Button className='border text-xs ml-5' onClick={limparEstrelas}>
-              Limpar
-            </Button>
-            <span className='ml-5 text-sm'>{(numStars > 0)? "Com Avaliação": "Sem avaliação"}</span>
-          </div>
         </div>
 
         <div className='flex flex-col mt-2'>
@@ -321,7 +338,7 @@ export default function NewBookPage() {
         )}
 
         <div className='flex justify-center mt-4 mb-4'>
-          <Button className='font-semibold border text-xs ml-5 justify-center border-[var(--border)]' >
+          <Button type='submit' className='font-semibold border text-xs ml-5 justify-center border-[var(--border)]' >
             Cadastrar
           </Button>
         </div>

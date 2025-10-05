@@ -3,6 +3,7 @@ import { BookCardProps } from "@/app/library/bookCard";
 
 
 export const livros: BookCardProps[] = [
+    //genre vai conter chabe primaria para livros, pois um genero tem varios livros e livro terá chave estrangeira referenciando o genreId
     {
         id: "0",
         title:"teste",

@@ -19,7 +19,7 @@ export default function DadoLivro({ livro }: { livro: BookCardProps }) {
                 <h1 className="mb-2 text-[20px] font-bold">{livro.title}</h1>
                 <h2 className="mb-2 text-[15px]">{livro.author}</h2>
                 <div className="flex mb-4 gap-2">
-                    <Badge variant="outline">{livro.genre}</Badge>
+                    <Badge variant="outline">{livro.genre.genero}</Badge>
                     <Badge variant="outline">{livro.year}</Badge>
                     <Badge variant="outline">{livro.pages} páginas</Badge>
                 </div>
