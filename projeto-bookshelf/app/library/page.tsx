@@ -64,7 +64,7 @@ export default function LibraryPage() {
   }
 
   // Aqui junta busca + filtro
-    const livrosFiltrados = livros.filter((livro) => {
+    const livrosFiltrados = (Array.isArray(livros) ? livros : []).filter((livro) => {
     const matchSearch = livro.title
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
