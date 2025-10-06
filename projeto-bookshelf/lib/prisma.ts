@@ -5,5 +5,12 @@ const prismaClientSingleton = () => {
     return new PrismaClient()
 }
 
-const prisma = globalThis.prisma ?? prismaClientSingleton()
+// Add a type-safe property to globalThis
+declare global {
+    var prisma: PrismaClient | undefined;
+}
+
+const prisma = globalThis.prisma ?? prismaClientSingleton();
+globalThis.prisma = prisma;
+
 export default prisma

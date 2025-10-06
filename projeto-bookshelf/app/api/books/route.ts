@@ -1,16 +1,8 @@
-import { livrosDB } from "@/lib/db";
+// app/api/books/route.js
 import { NextResponse } from "next/server";
-import { BookCardProps } from "@/app/library/bookCard";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()
-
-//usado para get e post de todos os livros de forma geral
-
-
-// export async function GET() {
-//     return NextResponse.json(livrosDB, { status : 200 })
-// }
 
 export async function GET() {
     try {
@@ -21,22 +13,14 @@ export async function GET() {
         })
         return NextResponse.json(livros, { status: 200 })
     } catch (error) {
+        console.error("Erro GET books:", error);
         return NextResponse.json({ error: "Erro na consulta de livros"}, {status: 500})
     }
 }
 
-// export async function POST(req: Request){
-//     const newBook: BookCardProps = await req.json();
-//     newBook.id = String(livrosDB.length);
-//     livrosDB.push(newBook)
-
-//     return NextResponse.json(newBook, { status:  201 })
-// }
-
-export async function POST(req: Request) {
+export async function POST(request: Request) {
     try {
-        const data = await req.json();
-
+        const data = await request.json();
 
         const newBook = await prisma.book.create({
             data: {
@@ -51,15 +35,14 @@ export async function POST(req: Request) {
                 year: data.year,
                 totalPaginasLidas: data.totalPaginasLidas,
                 genreId: data.genreId
-                
             }
         });
 
         console.log("Livro criado com sucesso:", newBook);
         return NextResponse.json(newBook, { status: 201 });
 
-    } catch (error) {
-        console.error("Erro detalhado:", error);
+    } catch (error: any) {
+        console.error("Erro POST books:", error);
         return NextResponse.json({ 
             error: "Erro ao cadastrar livro",
             details: error.message 

@@ -9,7 +9,6 @@ import { StarRating } from "@/components/ui/custom-components/star";
 import { useForm, Controller } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import { BookCardProps } from '../library/bookCard';
-import { useLivros } from '@/context/LivrosContext';
 import { title } from 'process';
 import { FormData } from '../types/books';
 import ChangeTheme from "../dashboard/changeTheme";
@@ -32,11 +31,10 @@ export default function NewBookPage() {
   const actualPageValue = watch("actualPage");
   const isbnValue = watch("isbn");
   const urlValue = watch("url");
-  const genreValue = watch("genre");
+  const genreValue = watch("genreId");
   const statusValue = watch("status");
   const notesValue = watch("notes");
   const [numStars, setNumStars] = useState(0)
-  const { addLivro, idLivro } = useLivros();
   const [coverUrl, setCoverUrl] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState("");
   const [progress, setProgress] = useState(0);
@@ -46,7 +44,6 @@ export default function NewBookPage() {
 //   const [customGenre, setCustomGenre] = useState("");
 //   const [isCustomGenre, setIsCustomGenre] = useState(false);
 
-// >>>>>>> origin/Raquel
   useEffect(() => {
     const fields = [
       titleValue,
@@ -108,7 +105,7 @@ export default function NewBookPage() {
   }
 
   async function onSubmit(userData: FormData): Promise<void> {
-    const selectedGenero = userData.genre;
+    const selectedGenero = userData.genreId;
     const selectedGenreObj = categorias.find((cat: any) => cat.genero === selectedGenero);
 
     const novoLivro: BookCardProps = {
@@ -122,7 +119,7 @@ export default function NewBookPage() {
       synopsis: userData.notes,
       cover: userData.url || "https://cdn-icons-png.flaticon.com/512/5999/5999928.png",
       status: userData.status,
-      totalPaginasLidas: Number(userData.actualPage).toString(),
+      totalPaginasLidas: String(userData.actualPage || "0"),
       onDelete: () => {}
   };
 
